@@ -28,6 +28,11 @@ public class Router {
     public Router() {
     }
     
+    public String showIncorrenctUsernameOrPassword()
+    {
+        return "<p><b><font color=\"red\">Incorrect username or password</font></b></p>";
+    }
+    
     
     
     public String userFirstTime(ServletContext application , String sessionManager)
@@ -38,17 +43,13 @@ public class Router {
               "\n" +
 "            <table cellspacing=\"5\" border=\"0\">\n" +
 "                <tr>\n" +
-"                    <td align=\"right\">Name:</td>\n" +
-"                    <td><input type=\"text\" name=\"name\" required=\"true\" ></td>\n" +
-"                </tr>\n" +
-"                <tr>\n" +
 "                    <td align=\"right\">Email address:</td>\n" +
-"                    <td><input type=\"text\" name=\"emailAddress\" required=\"true\" ></td>\n" +
+"                    <td><input type=\"email\" name=\"email\" required=\"true\" ></td>\n" +
 "                    \n" +
 "                </tr>\n" +
 "                <tr>\n" +
-"                    <td align=\"right\">Phone Number</td>\n" +
-"                    <td><input type=\"text\" name=\"phoneNumber\" required=\"true\" ></td>\n" +
+"                    <td align=\"right\">Password</td>\n" +
+"                    <td><input type=\"password\" name=\"password\" required=\"true\" minlength=\"8\" ></td>\n" +
 "                </tr>\n" +
 "                <tr>\n" +
 "                    <td></td>\n" +

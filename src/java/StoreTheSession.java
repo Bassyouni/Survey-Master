@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -47,38 +48,63 @@ public class StoreTheSession extends HttpServlet {
             
             String SessionManager = "SessionManager";
             
-            String name = request.getParameter("name");
-            String phoneNumber = request.getParameter("phoneNumber");
-            String emailAddress = request.getParameter("emailAddress");
+            String email = request.getParameter("email");
+            String userPassword = request.getParameter("password");
            
-            String url = "jdbc:mysql://localhost:3306/session_manager";
+            String url = "jdbc:mysql://localhost:3306/survey_db";
             String user = "root";
             String password = "root";
-
-            HttpSession session = request.getSession(true);
-
-            session.setAttribute("UName", name);
-            session.setMaxInactiveInterval(3 * 60);
-           
-            
-            //add session to sessionManager
-            HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
-            sessionMangerHash.put(session.getId(), session);
-            
-            //Add cookie
-            Cookie cookie = new Cookie ("MyCurrentSession",session.getId());
-            cookie.setMaxAge(3 * 60);
-            response.addCookie(cookie);
             
             Connection Con = DriverManager.getConnection(url, user, password);
             
             //Statment 
+            String selectQuery = "SELECT * FROM survey_db.users where email = '" + email + "' and password = '"+ userPassword +"' ;";
             Statement Stmt = Con.createStatement();
-            int Rows = Stmt.executeUpdate("INSERT INTO `session_manager`.`user` (`session_ID`, `phone_number`, `email_address`) VALUES ('" + session.getId() + "', '" + phoneNumber + "', '" + emailAddress + "');");
-            System.out.println("Rows Affected: "+Rows);
-
-            response.sendRedirect("Intro.jsp");
-
+            
+            ResultSet RS = Stmt.executeQuery(selectQuery);
+            
+            if (RS != null)
+            {
+                 String id = "";
+                 String name = "";
+                 
+                 boolean isFound = false;
+                 while (RS.next()) 
+                {                    
+                    id = RS.getString("id");
+                    name = RS.getString("name");
+                    isFound = true;
+                }
+                 
+                 if(isFound)
+                 {
+                     //Making a session and saving in it name and id of the user
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("name", name);
+                    session.setAttribute("id", id);
+                    session.setMaxInactiveInterval(60 * 60);
+           
+                    //add session to sessionManager
+                    HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
+                    sessionMangerHash.put(session.getId(), session);
+            
+                    //Add cookie
+                    Cookie cookie = new Cookie ("MyCurrentSession",session.getId());
+                    cookie.setMaxAge(60 * 60);
+                    response.addCookie(cookie);
+                    response.sendRedirect("Home.jsp");  
+                 }
+                 else
+                 {
+                     //Add incorect username or password cookie
+                    Cookie cookie = new Cookie ("userNotFound","true");
+                    cookie.setMaxAge(60 * 60);
+                    response.addCookie(cookie);
+                    response.sendRedirect("Login.jsp");  
+                 }
+                     
+            }
+            
         }
     }
 

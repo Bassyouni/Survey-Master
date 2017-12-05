@@ -61,18 +61,7 @@ public class logout extends HttpServlet {
             
             if(myCookie != null)
             {
-                try { 
-                    Class.forName("com.mysql.jdbc.Driver");
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
                 String sessionID = myCookie.getValue();
-                
-                String url = "jdbc:mysql://localhost:3306/session_manager";
-                String user = "root";
-                String password = "root";
-                String query = "DELETE FROM `session_manager`.`user` WHERE `session_ID`='" + sessionID + "';";
                         
                 HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
                 sessionMangerHash.remove(sessionID);
@@ -80,19 +69,12 @@ public class logout extends HttpServlet {
                 myCookie.setValue(null);
                 myCookie.setMaxAge(0);
                 response.addCookie(myCookie);
-                
-                Connection Con = DriverManager.getConnection(url, user, password);
-            
-                //Statment 
-                Statement Stmt = Con.createStatement();
-                int Rows = Stmt.executeUpdate(query);
-                System.out.println("Rows Affected From : "+Rows);
             }
             else
             {
                 System.out.println("logout.processRequest() ,, something is wrong no cookie found");
             }
-            response.sendRedirect("Intro.jsp");
+            response.sendRedirect("Login.jsp");
         }
     }
 

@@ -14,11 +14,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FCI Manager</title>
+        <title>Survey</title>
     </head>
     <body>
-        
-        
         
         <%
             Router router = new Router();
@@ -34,6 +32,15 @@
                     if (cookies [i].getName().equals (cookieName))
                     {
                         myCookie = cookies[i];
+                        break;
+                    }
+                    if (cookies[i].getName().equals("userNotFound"))
+                    {
+                        out.print(router.showIncorrenctUsernameOrPassword());
+                        Cookie cookie = cookies[i];
+                        cookie.setValue(null);
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
                         break;
                     }
                 }
@@ -70,8 +77,8 @@
                     }
                     else
                     {
-                        out.print(router.showUserInfo(userSession, sessionMangerHash.size()));
-                        out.print(router.showLogut());            
+                        session = userSession;
+                       request.getRequestDispatcher("Home.jsp").forward(request, response);
                     }
 
                 }
