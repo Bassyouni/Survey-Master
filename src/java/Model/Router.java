@@ -1,0 +1,131 @@
+package Model;
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Bassyouni
+ */
+public class Router {
+
+    public Router() {
+    }
+    
+    
+    
+    public String userFirstTime(ServletContext application , String sessionManager)
+    {
+
+            //First time
+                String result = "<form action=\"StoreTheSession\" method=\"get\">\n" +
+              "\n" +
+"            <table cellspacing=\"5\" border=\"0\">\n" +
+"                <tr>\n" +
+"                    <td align=\"right\">Name:</td>\n" +
+"                    <td><input type=\"text\" name=\"name\" required=\"true\" ></td>\n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td align=\"right\">Email address:</td>\n" +
+"                    <td><input type=\"text\" name=\"emailAddress\" required=\"true\" ></td>\n" +
+"                    \n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td align=\"right\">Phone Number</td>\n" +
+"                    <td><input type=\"text\" name=\"phoneNumber\" required=\"true\" ></td>\n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td></td>\n" +
+"                    <td><br><input type=\"submit\" value=\"Submit\"></td>\n" +
+"                </tr>\n" +
+"\n" +
+"            </table>\n" +
+"\n" +
+"        </form> <p>OR</p> <br> <form action=\"SignUp.jsp\">\n" +
+"            <input type=\"submit\" value=\"Sign up\">\n" +
+"        </form>";
+             
+                
+                if (application.getAttribute(sessionManager) == null)
+                {
+                    HashMap<String, HttpSession> myHash = new HashMap<>();
+                    application.setAttribute(sessionManager, myHash);
+                }
+          return result;
+    }
+    
+    public String showLogut()
+    {
+        String result = "<form action=\"logout\"><br><input type=\"submit\" value=\"Logout\"></form>";
+        return result;
+    }
+    
+    public String showUserInfo(HttpSession session, int sessionsNumber) throws SQLException
+    {
+        try { 
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Router.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            String url = "jdbc:mysql://localhost:3306/session_manager";
+            String user = "root";
+            String password = "root";
+            
+            String Line;
+            Connection Con = null;
+            Statement Stmt = null;
+            ResultSet RS = null;
+            String result = "";
+
+            try
+            {
+                Con = DriverManager.getConnection(url, user, password);
+                Stmt = Con.createStatement();
+                
+                RS = Stmt.executeQuery("SELECT * FROM user WHERE session_ID = '" + session.getId() + "';");
+            }
+            catch(Exception cnfe)
+            {
+            System.err.println("Exception: " + cnfe);
+            }
+            
+            if (RS != null)
+            {
+                
+                result = "Number of sessions: " + sessionsNumber + "<br>Your name: " + session.getAttribute("UName").toString();
+                
+                while (RS.next()) 
+                {                    
+                    String temp = RS.getString("phone_number");
+                    result += "<br>Mobile number: " + temp;
+                    temp = RS.getString("email_address");
+                    result += "<br>Email address: " + temp;
+                    
+                }
+                return result;
+            }
+            else
+            {
+                result = "Error in database quory";
+                return result;
+            }
+        
+    }
+}
