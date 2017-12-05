@@ -14,13 +14,13 @@
     <body>
         <%
             Router router = new Router();
-                String name = session.getAttribute("name").toString();
+            HttpSession userSession = request.getSession();
+            
+            String name = userSession.getAttribute("name").toString();
+            String id = userSession.getAttribute("id").toString();
 
-                String id = session.getAttribute("id").toString();
-
-                out.print(name + " " + id );
-                
-                out.print(router.showLogut());
+            out.print(name + " " + id );
+            out.print(router.showLogut());
                 
                 
 

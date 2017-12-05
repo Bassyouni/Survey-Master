@@ -77,10 +77,13 @@
                     }
                     else
                     {
-                        session = userSession;
-                       request.getRequestDispatcher("Home.jsp").forward(request, response);
+                        // why is the session gets deleted when closing the browser?
+                        // this code below is a work around solution and most importantly it works
+                        HttpSession s = request.getSession(true);
+                        s.setAttribute("name", userSession.getAttribute("name").toString());
+                        s.setAttribute("id", userSession.getAttribute("id").toString());
+                       response.sendRedirect("Home.jsp");
                     }
-
                 }
             }
             
