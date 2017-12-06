@@ -39,28 +39,30 @@ public class Router {
     {
 
             //First time
-                String result = "<form action=\"StoreTheSession\" method=\"get\">\n" +
+                String result = "<div id=\"wrapper\">"
+                        + "<form action=\"StoreTheSession\" method=\"get\">\n" +
               "\n" +
 "            <table cellspacing=\"5\" border=\"0\">\n" +
-"                <tr>\n" +
+"                <div class=\"form-element\"><tr>\n" +
 "                    <td align=\"right\">Email address:</td>\n" +
 "                    <td><input type=\"email\" name=\"email\" required=\"true\" ></td>\n" +
 "                    \n" +
-"                </tr>\n" +
-"                <tr>\n" +
+"                </tr></div>\n" +
+"                <div class=\"form-element\"><tr>\n" +
 "                    <td align=\"right\">Password</td>\n" +
 "                    <td><input type=\"password\" name=\"password\" required=\"true\" minlength=\"8\" ></td>\n" +
-"                </tr>\n" +
-"                <tr>\n" +
+"                </tr></div>\n" +
+"                <div class=\"form-element\"><tr>\n" +
 "                    <td></td>\n" +
-"                    <td><br><input type=\"submit\" value=\"Submit\"></td>\n" +
-"                </tr>\n" +
+"                    <td><br><input type=\"submit\" value=\"Sign in\"></td>\n" +
+"                </tr></div>\n" +
 "\n" +
 "            </table>\n" +
 "\n" +
-"        </form> <p>OR</p> <br> <form action=\"SignUp.jsp\">\n" +
-"            <input type=\"submit\" value=\"Sign up\">\n" +
-"        </form>";
+"        </form>  <form align= \"center\" action=\"SignUp.jsp\">\n" +
+"        <p> OR </p><br>    <input type=\"submit\" value=\"Sign up\">\n" +
+"        </form>        </div>\n" +
+"";
              
                 
                 if (application.getAttribute(sessionManager) == null)
