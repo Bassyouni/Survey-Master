@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
+import Model.User;
 import com.sun.xml.ws.security.trust.WSTrustConstants;
+import database.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -41,36 +43,29 @@ public class SaveUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final String userTable = "users";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            // necssary for databas
-            Class.forName("com.mysql.jdbc.Driver"); 
-            
+          
             //Form data
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String userPassword = request.getParameter("password");
-           
-            //database variables
-            String url = "jdbc:mysql://localhost:3306/survey_db";
-            String user = "root";
-            String password = "root";
-            Connection Con = DriverManager.getConnection(url, user, password);
-            
             
             //Statment to insert user
-            String insertQuery = "INSERT INTO `survey_db`.`users` (`is_administrator`, `name`, `password`, `email`, `is_suspended`) VALUES ('0', '" + name + "', '" + userPassword + "', '" + email + "', '0');";
-            Statement Stmt = Con.createStatement();
-            int Rows = Stmt.executeUpdate(insertQuery);
-            System.out.println("Rows Affected: "+Rows);
+            User createdUser = new User("0", name, userPassword, email, "0");
+            
+            databaseConnection.insertInto(userTable, createdUser.getAttributes());
             
             // statment to get user autoincrmented id to save in session
-            String selectQuery = "SELECT id FROM survey_db.users where name = '"+ name +"' and password = '"+ userPassword +"' and email = '"+ email +"'";
-            Stmt = Con.createStatement();
             
-            ResultSet RS = Stmt.executeQuery(selectQuery);
+            
+            ResultSet RS = databaseConnection.select(userTable, createdUser.getAttributes());
             
             if (RS != null)
             {

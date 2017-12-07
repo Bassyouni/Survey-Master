@@ -53,7 +53,7 @@ public class StoreTheSession extends HttpServlet {
            
             String url = "jdbc:mysql://localhost:3306/survey_db";
             String user = "root";
-            String password = "root";
+            String password = "24972052";
             
             Connection Con = DriverManager.getConnection(url, user, password);
             

@@ -89,7 +89,7 @@ public class Router {
             
             String url = "jdbc:mysql://localhost:3306/session_manager";
             String user = "root";
-            String password = "root";
+            String password = "24972052";
             
             String Line;
             Connection Con = null;

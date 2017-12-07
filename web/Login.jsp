@@ -129,6 +129,7 @@
                         HttpSession s = request.getSession(true);
                         s.setAttribute("name", userSession.getAttribute("name").toString());
                         s.setAttribute("id", userSession.getAttribute("id").toString());
+                        
                        response.sendRedirect("Home.jsp");
                     }
                 }
