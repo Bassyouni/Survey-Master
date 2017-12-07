@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import Model.User;
+import database.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.DriverManager;
@@ -39,29 +41,24 @@ public class StoreTheSession extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final String userTable = "users";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            Class.forName("com.mysql.jdbc.Driver"); 
-
-            
             String SessionManager = "SessionManager";
             
             String email = request.getParameter("email");
             String userPassword = request.getParameter("password");
-           
-            String url = "jdbc:mysql://localhost:3306/survey_db";
-            String user = "root";
-            String password = "24972052";
             
-            Connection Con = DriverManager.getConnection(url, user, password);
-            
+            User currentUser = new User(null, null, userPassword, email, null);
             //Statment 
-            String selectQuery = "SELECT * FROM survey_db.users where email = '" + email + "' and password = '"+ userPassword +"' ;";
-            Statement Stmt = Con.createStatement();
             
-            ResultSet RS = Stmt.executeQuery(selectQuery);
+            ResultSet RS = databaseConnection.select(userTable, currentUser.getAttributes());
             
             if (RS != null)
             {

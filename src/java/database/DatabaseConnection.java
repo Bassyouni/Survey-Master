@@ -138,4 +138,18 @@ public class DatabaseConnection {
         
     }
     
+    public int delete(String tableName, int id){
+        String sql = "DELETE FROM " + tableName + " Where id = " + id + ";";
+        int rowsAffected = -1;
+        try {
+            Statement statement = con.createStatement();
+            rowsAffected = statement.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return rowsAffected;
+        }
+        return rowsAffected;
+        
+    }
+    
 }

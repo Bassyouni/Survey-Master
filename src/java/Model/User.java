@@ -33,11 +33,16 @@ public class User {
     public HashMap<String, String> getAttributes(){
         //`is_administrator`, `name`, `password`, `email`, `is_suspended`
         HashMap<String, String> attributes = new HashMap<>();
-        attributes.put("is_administrator", isAdministrator);
-        attributes.put("name", name);
-        attributes.put("password", password);
-        attributes.put("email", email);
-        attributes.put("is_suspended", isSuspended);
+        if(isAdministrator != null)
+            attributes.put("is_administrator", isAdministrator);
+        if(name != null)
+            attributes.put("name", name);
+        if(password != null)
+            attributes.put("password", password);
+        if(email != null)
+            attributes.put("email", email);
+        if(isSuspended != null)
+            attributes.put("is_suspended", isSuspended);
         
         return attributes;
     }
