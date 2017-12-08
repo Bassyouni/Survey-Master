@@ -79,56 +79,5 @@ public class Router {
         return result;
     }
     
-    public String showUserInfo(HttpSession session, int sessionsNumber) throws SQLException
-    {
-        try { 
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Router.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-            String url = "jdbc:mysql://localhost:3306/session_manager";
-            String user = "root";
-            String password = "24972052";
-            
-            String Line;
-            Connection Con = null;
-            Statement Stmt = null;
-            ResultSet RS = null;
-            String result = "";
-
-            try
-            {
-                Con = DriverManager.getConnection(url, user, password);
-                Stmt = Con.createStatement();
-                
-                RS = Stmt.executeQuery("SELECT * FROM user WHERE session_ID = '" + session.getId() + "';");
-            }
-            catch(Exception cnfe)
-            {
-            System.err.println("Exception: " + cnfe);
-            }
-            
-            if (RS != null)
-            {
-                
-                result = "Number of sessions: " + sessionsNumber + "<br>Your name: " + session.getAttribute("UName").toString();
-                
-                while (RS.next()) 
-                {                    
-                    String temp = RS.getString("phone_number");
-                    result += "<br>Mobile number: " + temp;
-                    temp = RS.getString("email_address");
-                    result += "<br>Email address: " + temp;
-                    
-                }
-                return result;
-            }
-            else
-            {
-                result = "Error in database quory";
-                return result;
-            }
-        
-    }
+   
 }

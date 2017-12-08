@@ -11,14 +11,14 @@ package Model;
  */
 public class Answer {
     private int id;
-    private User user;
+    private int userId;
     private String answer;
     private Question question;
     private Survey survey;
 
-    public Answer(int id, User user, String answer, Question question, Survey survey) {
+    public Answer(int id, int userId, String answer, Question question, Survey survey) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.answer = answer;
         this.question = question;
         this.survey = survey;
@@ -32,12 +32,12 @@ public class Answer {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUseriD() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int userId) {
+        this.userId = userId;
     }
 
     public String getAnswer() {

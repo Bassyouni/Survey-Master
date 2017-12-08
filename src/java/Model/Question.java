@@ -14,16 +14,16 @@ import java.util.ArrayList;
 public class Question {
     
    private int id;
-   private Survey survey;
+   private int surveyId;
    private String type;
    private String question;
    private String givenAnswers;
    private boolean isSuspended;
    public ArrayList<Answer> answers;
 
-    public Question(int id, Survey survey, String type, String question, String givenAnswers, boolean isSuspended) {
+    public Question(int id, int survey, String type, String question, String givenAnswers, boolean isSuspended) {
         this.id = id;
-        this.survey = survey;
+        this.surveyId = survey;
         this.type = type;
         this.question = question;
         this.givenAnswers = givenAnswers;
@@ -38,12 +38,12 @@ public class Question {
         this.id = id;
     }
 
-    public Survey getSurvey() {
-        return survey;
+    public int getSurveyiD() {
+        return surveyId;
     }
 
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
+    public void setSurveyiD(int surveyId) {
+        this.surveyId = surveyId;
     }
 
     public String getType() {

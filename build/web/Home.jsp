@@ -3,6 +3,9 @@
     Created on : Dec 5, 2017, 3:48:24 AM
     Author     : Bassyouni
 --%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Survey"%>
+<%@page import="database.DatabaseConnection"%>
 <%@page import="Model.Router"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +16,7 @@
     </head>
     <body>
         <%
+            
             Router router = new Router();
             HttpSession userSession = request.getSession();
             
@@ -21,7 +25,11 @@
 
             out.print(name + " " + id );
             out.print(router.showLogut());
-                
+            
+            ArrayList<Survey> surveys = Survey.getAllSurveys();
+            for(int i = 0; i < surveys.size(); i++){
+                out.print( "<h3>" + surveys.get(i) + "</h3>");
+            }
                 
 
                    
