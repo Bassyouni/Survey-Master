@@ -10,6 +10,8 @@ user features:
 	- show all surveys on home.jsp . "each user should be able to close or susbend his survey. using ajax"
 		
 	-take survey. "can show his name or not"
+	
+	-creator should see who took their survey and show statistics #don't forget
 
 Pages:
 
