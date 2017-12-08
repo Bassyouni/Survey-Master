@@ -19,8 +19,14 @@ Pages:
 	
 	-profile.jsp
 	
-	-takeSurvey.jsp
+	-takeSurvey.jsp 
+	
 
-administratorPanel
-     
-     -check it in assginment description	
+	-administratorPanel
+     		
+		-SurveryFeed.jsp "this is for admin"
+
+     		-check it in assginment description
+
+     		-Class administrator child of User class that has functions of an administrator.
+	
