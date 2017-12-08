@@ -12,8 +12,8 @@ user features:
 	-take survey. "can show his name or not"
 
 Pages:
-       
-   -home.jsp
+
+	-home.jsp
 	
 	-createSurvey.jsp
 	
