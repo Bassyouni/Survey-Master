@@ -13,7 +13,7 @@ user features:
 
 Pages:
        
-       -home.jsp
+        -home.jsp
 	
 	-createSurvey.jsp
 	
