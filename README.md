@@ -21,10 +21,8 @@ Pages:
 	
 	-takeSurvey.jsp 
 	
-
 	-administratorPanel
-     		
-		-SurveryFeed.jsp "this is for admin"
+     		-SurveryFeed.jsp "this is for admin"
 
      		-check it in assginment description
 
