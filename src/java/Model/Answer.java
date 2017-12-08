@@ -13,15 +13,15 @@ public class Answer {
     private int id;
     private int userId;
     private String answer;
-    private Question question;
-    private Survey survey;
+    private int questionId;
 
-    public Answer(int id, int userId, String answer, Question question, Survey survey) {
+
+    public Answer(int id, int userId, String answer, int questionId) {
         this.id = id;
         this.userId = userId;
         this.answer = answer;
-        this.question = question;
-        this.survey = survey;
+        this.questionId = questionId;
+
     }
 
     public int getId() {
@@ -48,21 +48,15 @@ public class Answer {
         this.answer = answer;
     }
 
-    public Question getQuestion() {
-        return question;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
-    public Survey getSurvey() {
-        return survey;
-    }
 
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
-    }
     
     
 }
