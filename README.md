@@ -13,13 +13,13 @@ user features:
 
 Pages:
        
-        -home.jsp
+   -home.jsp
 	
 	-createSurvey.jsp
 	
 	-profile.jsp
 	
-	-takeSurvey
+	-takeSurvey.jsp
 
 administratorPanel
      
