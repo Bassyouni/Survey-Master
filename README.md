@@ -17,7 +17,7 @@ Pages:
 
 	-home.jsp
 	
-	-createSurvey.jsp
+	-createSurvey.jsp (ahmed amr took this part and working , any one will put his hands in this section will be kicked in his ass.
 	
 	-profile.jsp
 	
