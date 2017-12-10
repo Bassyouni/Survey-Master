@@ -9,6 +9,7 @@ import database.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ public class Survey {
     private int id;
     private int ownerId;
     private String name;
+    private boolean suspended;
     public ArrayList<Question> questions;
     
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -58,6 +60,32 @@ public class Survey {
     public void setName(String Name) {
         this.name = Name;
     }
+
+    public boolean isSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(boolean suspended) {
+        this.suspended = suspended;
+    }
+    
+    public static Survey getSurvey(int id, HashMap<String, String> selectAttributeMap){
+        ResultSet rs = databaseConnection.select(surveyTableName, selectAttributeMap);
+        Survey dummySurvey = null;
+        try {
+            while(rs.next()){
+                dummySurvey = new Survey();
+                dummySurvey.setId(rs.getInt("id"));
+                dummySurvey.setOwnerId(rs.getInt("owner"));
+                dummySurvey.setName(rs.getString("name"));
+                dummySurvey.setSuspended(rs.getBoolean("isSuspended"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Survey.class.getName()).log(Level.SEVERE, null, ex);
+            return dummySurvey;
+        }
+        return dummySurvey;
+    }
     
     public static ArrayList<Survey> getAllSurveys(){
         ArrayList<Survey> surveys = new ArrayList<>();
@@ -69,6 +97,7 @@ public class Survey {
                 dummySurvey.setId(rs.getInt("id"));
                 dummySurvey.setOwnerId(rs.getInt("owner"));
                 dummySurvey.setName(rs.getString("name"));
+                dummySurvey.setSuspended(rs.getBoolean("isSuspended"));
                 surveys.add(dummySurvey);
             }
         } catch (SQLException ex) {

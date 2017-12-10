@@ -41,10 +41,10 @@
             String id = userSession.getAttribute("id").toString();
         %>
         
-         <!-- Navigation -->
+        <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
-              <a class="navbar-brand" href="Home.jsp"><%=name%></a>
+              <a class="navbar-brand" href="Home.jsp">Survey Master</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               Menu
               <i class="fa fa-bars"></i>
@@ -53,6 +53,9 @@
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                   <a class="nav-link" href="Home.jsp">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Profile.jsp">Profile</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>
@@ -83,14 +86,16 @@
             
             
         <%
-            
-            
             ArrayList<Survey> surveys = Survey.getAllSurveys();
             String output;
             for(int i = 0; i < surveys.size(); i++){
                 Survey currentSurvey = surveys.get(i);
+                if(currentSurvey.getOwnerId() == Integer.parseInt(id))
+                {
+                    continue;
+                }
                 output = "<div class='post-preview'>" +
-              "<a href='post.html'>"+
+              "<a href='#'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +
@@ -99,18 +104,13 @@
                 "</h3>"+
               "</a>"+
               "<p class='post-meta'>Posted by" + 
-                "<a href='#'> owner ID:" + currentSurvey.getOwnerId() + "</a>"+
+                "<a href='Profile.jsp'> owner ID:" + currentSurvey.getOwnerId() + "</a>"+
                 
               "</p>" + 
             "</div>"+
             "<hr>";
                 out.print(output);
             }
-                
-
-                   
-        
-        
         %>
                 </div>
             </div>

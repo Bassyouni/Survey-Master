@@ -30,7 +30,10 @@ a {
   transition: all 0.2s; }
   a:focus, a:hover {
     color: #0085A1; }
-
+  
+.suspend-link, .delete-link, .shitbox :hover{
+    cursor: pointer !important;
+}
 blockquote {
   font-style: italic;
   color: #868e96; }

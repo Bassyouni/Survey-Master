@@ -161,14 +161,14 @@ public class DatabaseConnection {
          }
          
          //creating this sql statement UPDATE users SET password = '1234' WHERE id ='12';
-         String sql = "Update " + tableName + "set ";
+         String sql = "Update " + tableName + " set ";
          for(int i = 0; i < attributes.size(); i++){
             if(i != attributes.size() -1 )
                 sql += attributes.get(i) + " = '" + values.get(i) + "', ";
             else
                 sql += attributes.get(i) + " = '" + values.get(i) + "' Where id = " + id + ";" ;
         }
-         
+         System.out.println(sql);
         int rowsAffected = -1;
         try {
             Statement statement = con.createStatement();

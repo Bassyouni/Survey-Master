@@ -1,46 +1,50 @@
 <%-- 
-    Document   : Home
-    Created on : Dec 5, 2017, 3:48:24 AM
-    Author     : Bassyouni
+    Document   : Profile
+    Created on : Dec 10, 2017, 3:13:39 PM
+    Author     : Sanad
 --%>
-<%@page import="java.util.ArrayList"%>
+
 <%@page import="Model.Survey"%>
-<%@page import="database.DatabaseConnection"%>
-<%@page import="Model.Router"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    HashMap<String, HttpSession> sessionManger = (HashMap<String, HttpSession>)request.getServletContext().getAttribute("SessionManager");
+    Cookie[] cookies = request.getCookies();
+    Cookie currentUserCookie = null;
+    for(int i = 0; i < cookies.length; i++){
+        if(cookies[i].getName().equals("MyCurrentSession"))
+        {
+            currentUserCookie = cookies[i];
+            break;
+        }
+    }
+    
+    HttpSession currentUserSession = sessionManger.get(currentUserCookie.getValue());
+    
+    String userName = currentUserSession.getAttribute("name").toString();
+    String userId = currentUserSession.getAttribute("id").toString();
+%>
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title><%= userName%></title>
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <head>
+        <!-- Custom fonts for this template -->
+        <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Sanad">
-
-    <title>Home</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-    <!-- Custom styles for this template -->
-    <link href="css/clean-blog.min.css" rel="stylesheet">
-
-  </head>
+        <!-- Custom styles for this template -->
+        <link href="css/clean-blog.css" rel="stylesheet">
+    </head>
     <body>
-        <%
-            Router router = new Router();
-            HttpSession userSession = request.getSession();
-            
-            String name = userSession.getAttribute("name").toString();
-            String id = userSession.getAttribute("id").toString();
-        %>
-        
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
@@ -64,22 +68,22 @@
             </div>
           </div>
         </nav>
-         
+        
         <!-- Page Header -->
-        <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+        <header class="masthead" style="background-image: url('img/about-bg.jpg')">
           <div class="overlay"></div>
           <div class="container">
             <div class="row">
               <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                  <h1>Survey Master</h1>
-                  <span class="subheading">Making it simple...</span>
+                <div class="page-heading">
+                  <h1>Welcome, <%= userName %></h1>
+                  <span class="subheading">Here you can manage your surveys.</span>
                 </div>
               </div>
             </div>
           </div>
         </header>
-
+        
         <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
@@ -90,11 +94,10 @@
             String output;
             for(int i = 0; i < surveys.size(); i++){
                 Survey currentSurvey = surveys.get(i);
-                if(currentSurvey.getOwnerId() == Integer.parseInt(id))
-                {
+                if(currentSurvey.getOwnerId() != Integer.parseInt(userId)){
                     continue;
                 }
-                output = "<div class='post-preview'>" +
+                output = "<div class='post-preview' id='survey-" + currentSurvey.getId()+ "'>" +
               "<a href='#'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
@@ -103,19 +106,28 @@
                   "this is a description"+
                 "</h3>"+
               "</a>"+
-              "<p class='post-meta'>Posted by" + 
-                "<a href='Profile.jsp'> owner ID:" + currentSurvey.getOwnerId() + "</a>"+
+              "<p class='post-meta'>"; 
+                if(currentSurvey.isSuspended()){
+                    output += "<a id='suspend-survey-" + currentSurvey.getId() +
+                            "' class='text-success suspend-link'>Resume</a>"+ "   ";
+                }
+                else{
+                    output += "<a id='suspend-survey-" + currentSurvey.getId() + 
+                            "' class='text-warning suspend-link'>Suspend</a>"+ "   ";
+                }
                 
-              "</p>" + 
-            "</div>"+
-            "<hr>";
+                output += "<a id='delete-survey-" + currentSurvey.getId() + 
+                        "' class='text-danger delete-link'>Delete" + "</a>"+
+              "</p>" +
+                "<hr>"+
+            "</div>";
                 out.print(output);
             }
         %>
                 </div>
             </div>
         </div>
-            
+                
         <!-- Footer -->
         <footer>
           <div class="container">
@@ -152,12 +164,14 @@
             </div>
           </div>
         </footer>
-        
+
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
+        <script src="js/ajax-code.js"></script>
+        
     </body>
 </html>
