@@ -7,7 +7,7 @@ user features:
 	
 	- addSurvey.
 	
-	- show all surveys on home.jsp . "each user should be able to close or susbend his survey. using ajax" ( Sanad ).
+	- show all surveys on home.jsp . "each user should be able to close or susbend his survey. using ajax" ( Sanad ) (DONE).
 		
 	-take survey. "can show his name or not"
 	
@@ -19,7 +19,7 @@ Pages:
 	
 	-createSurvey.jsp (ahmed amr took this part and working , any one will put his hands in this section will be kicked in his ass.
 	
-	-profile.jsp ( Sanad ).
+	-profile.jsp ( Sanad ) (DONE).
 	
 	-takeSurvey.jsp 
 	
