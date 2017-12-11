@@ -9,87 +9,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        
-        <style type="text/css">
-            
-            body {
-               font-family: helvetica, sans-serif; 
-               font-size: 130%;
-            }
-            
-            input {
-                padding: 5px 5px 12px 5px; 
-                font-size: 25px;
-                border-radius: 5px;
-                border: 1px solid grey;
-                width: 320px;
-            }
-            
-            label {
-                position: relative;
-                top: 12px;
-                width: 200px;
-                float: left;
-            }
-            
-            #wrapper {
-                width: 550px;
-                margin: 0 auto;
-                 
-            }
-            
-            .form-element {
-                margin-bottom: 10px;
-            }
-            
-            #submitBtn
-            {
-                width: 130px;
-                margin-left: 200px;
-            }
-            
-        </style>
-        
+        <link href="css/form-style.css" rel="stylesheet">
         <title>Sign Up</title>
     </head>
     <body>
-        
-        <div id="wrapper">
-        <form action="SaveUser" method="post">
-            <div class="form-element">
-             
-            <label for="name">Name</label>
-            <input type="text" required="true" name="name" placeholder="Ex. Ahmed Abdel latif">
-            
-            </div>
-            
-            <div class="form-element">
-                
-            <label for="email">Email</label>
-            <input type="email" required="true" name="email"  placeholder="Ex. yourname@gmail.com">
-           
-            </div>
-            
-            <div class="form-element">
-            
-            <label for="password">Password</label>
-            <input type="password" required="true" name="password" minlength="8">
-            
-            </div>
-            
-            </div>
-            
-            <div class="form-element">
-            
-                <input type="submit" value="Sign Up" id="submitBtn">
-            
-            </div>
-            
-            
-        </form>
-        </div>
+            <%
+                                        if(request.getAttribute("emailExists") != null)
+                                        {
+                                            String output = "<div class='incorrect-box'>\n" +
+                        "            <p>There is a profile with the same email, login with it </p>\n" +
+                        "        </div>";
+                                            out.print(output);
+                                            request.removeAttribute("emailExists");
+                                        }
+                                    %>
+            <div class='wrapper'>
+                    <div class='container'>
+                            <h1>Welcome</h1>
 
+                            <form class='form' action='SaveUser' method='GET'>
+                                    <input class='input' type='text' name='name' placeholder='Name' required='true'>
+                                    <input class='input' type='email' name='email' placeholder='Email' required='true'>
+                                    <input class='input' type='password' name='password' placeholder='Password' required='true'>
+                                    <Button type='submit' id='login-button'>SignUp</button
+                            </form>
+                    </div>
         
+                    <ul class='bg-bubbles'>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                    </ul>
+            </div>
+            
+        <script src="vendor/jquery/jquery.min.js" type="text/javascript"></script>
+        <script  src="js/form-script.js"></script>
     </body>
 </html>

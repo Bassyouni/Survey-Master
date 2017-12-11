@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -24,8 +25,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
 
 /**
  *
@@ -43,63 +42,75 @@ public class SaveUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     private static final String userTable = "users";
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-          
+
             //Form data
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String userPassword = request.getParameter("password");
+
+            //check if this email was used or not
+            HashMap<String, String> attrHash = new HashMap<>();
+            attrHash.put("email", email);
+            ResultSet checkUniqueEmailResultSet = databaseConnection.select(userTable, attrHash);
             
-            //Statment to insert user
-            User createdUser = new User("0", name, userPassword, email, "0");
-            
-            databaseConnection.insertInto(userTable, createdUser.getAttributes());
-            
-            // statment to get user autoincrmented id to save in session
-            
-            
-            ResultSet RS = databaseConnection.select(userTable, createdUser.getAttributes());
-            
-            if (RS != null)
+            if (checkUniqueEmailResultSet != null) 
             {
-                 String id = "";
-                 while (RS.next()) 
-                {                    
-                    id = RS.getString("id");
+                if (checkUniqueEmailResultSet.next()) 
+                {
+                    //email not unique and exists in the db!
+                    request.setAttribute("emailExists", "");
+                    RequestDispatcher goToSignUp = request.getRequestDispatcher("SignUp.jsp");
+                    goToSignUp.forward(request, response);
+                } else 
+                {
+                    //email is unique and doesnt exist in db!
+
+                    //Statment to insert user
+                    User createdUser = new User("0", name, userPassword, email, "0");
+
+                    databaseConnection.insertInto(userTable, createdUser.getAttributes());
+
+                    // statment to get user autoincrmented id to save in session
+                    ResultSet RS = databaseConnection.select(userTable, createdUser.getAttributes());
+
+                    if (RS != null) 
+                    {
+                        String id = "";
+                        while (RS.next()) 
+                        {
+                            id = RS.getString("id");
+                        }
+
+                        HttpSession session = request.getSession(true);
+
+                        session.setAttribute("name", name);
+                        session.setAttribute("id", id);
+                        session.setMaxInactiveInterval(60 * 60);
+
+                        System.out.println(session.getAttribute("name") + "    " + session.getAttribute("id"));
+
+                        //add session to sessionManager
+                        String SessionManager = "SessionManager";
+                        HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>) request.getServletContext().getAttribute(SessionManager);
+                        sessionMangerHash.put(session.getId(), session);
+
+                        //Add cookie
+                        Cookie cookie = new Cookie("MyCurrentSession", session.getId());
+                        cookie.setMaxAge(60 * 60);
+                        response.addCookie(cookie);
+
+                    }
+
+                    response.sendRedirect("Login.jsp");
                 }
-                 
-                
-            HttpSession session = request.getSession(true);
-
-            session.setAttribute("name", name);
-            session.setAttribute("id", id);
-            session.setMaxInactiveInterval(60 * 60);
-            
-            System.out.println(session.getAttribute("name") + "    " + session.getAttribute("id"));
-           
-            
-            //add session to sessionManager
-            String SessionManager = "SessionManager";
-            HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
-            sessionMangerHash.put(session.getId(), session);
-            
-            //Add cookie
-            Cookie cookie = new Cookie ("MyCurrentSession",session.getId());
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
-                
             }
-            
-
-            response.sendRedirect("Login.jsp");
-            
         }
     }
 

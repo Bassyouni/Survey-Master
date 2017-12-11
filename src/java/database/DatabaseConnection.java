@@ -126,8 +126,9 @@ public class DatabaseConnection {
         
         //System.out.println(insertQuery);
         
-        Statement Stmt;
+        
         try {
+            Statement Stmt;
             Stmt = con.createStatement();
             rs = Stmt.executeQuery(insertQuery);
         } catch (SQLException ex) {

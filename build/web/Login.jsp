@@ -14,54 +14,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="css/form-style.css" rel="stylesheet">
+        <script src="vendor/jquery/jquery.min.js" type="text/javascript"></script>
         
-        <style type="text/css">
-            
-            body {
-               font-family: helvetica, sans-serif; 
-               font-size: 130%;
-            }
-            
-            input {
-                padding: 5px 5px 12px 5px; 
-                font-size: 25px;
-                border-radius: 5px;
-                border: 1px solid grey;
-                width: 320px;
-            }
-            
-            label {
-                position: relative;
-                top: 12px;
-                width: 200px;
-                float: left;
-            }
-            
-            #wrapper {
-                width: 550px;
-                margin: 0 auto;
-                 
-            }
-            
-            .form-element {
-                margin-bottom: 10px;
-            }
-            
-            #submitBtn
-            {
-                width: 130px;
-                margin-left: 200px;
-            }
-            
-            p {
-               margin: 0 auto;
-               position: relative;
-            }
-            
-        </style>
-        
-        <title>Survey</title>
+        <title>Login</title>
     </head>
     <body>
         
@@ -78,6 +34,7 @@
                 {
                     if (cookies [i].getName().equals (cookieName))
                     {
+                        out.print(router.showIncorrenctUsernameOrPassword());
                         myCookie = cookies[i];
                         break;
                     }
@@ -136,5 +93,7 @@
             }
             
         %>
+        
+        <script  src="js/form-script.js"></script>
     </body>
 </html>

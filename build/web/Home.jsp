@@ -103,8 +103,8 @@
                   "this is a description"+
                 "</h3>"+
               "</a>"+
-              "<p class='post-meta'>Posted by" + 
-                "<a href='Profile.jsp'> owner ID:" + currentSurvey.getOwnerId() + "</a>"+
+              "<p class='post-meta'>Posted by: " + 
+                "<a>" + currentSurvey.getOwnerId() + "</a>"+
                 
               "</p>" + 
             "</div>"+
