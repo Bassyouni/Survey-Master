@@ -25,7 +25,7 @@ public class DatabaseConnection {
     
     private static final String url = "jdbc:mysql://localhost:3306/survey_db";
     private static final String user = "root";
-    private static final String password = "24972052";
+    private static final String password = "root";
     
     private static Connection con;
     

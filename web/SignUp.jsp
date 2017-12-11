@@ -56,6 +56,9 @@
     <body>
         
         <div id="wrapper">
+            
+            
+            
         <form action="SaveUser" method="post">
             <div class="form-element">
              
@@ -68,7 +71,13 @@
                 
             <label for="email">Email</label>
             <input type="email" required="true" name="email"  placeholder="Ex. yourname@gmail.com">
-           
+            <%
+                if(request.getAttribute("emailExists") != null)
+                {
+                    out.print("<p><b><font color=\"red\">Email already Exists!</font></b></p>");
+                    request.removeAttribute("emailExists");
+                }
+           %>
             </div>
             
             <div class="form-element">

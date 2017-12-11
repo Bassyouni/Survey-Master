@@ -9,19 +9,9 @@
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
-    HashMap<String, HttpSession> sessionManger = (HashMap<String, HttpSession>)request.getServletContext().getAttribute("SessionManager");
-    Cookie[] cookies = request.getCookies();
-    Cookie currentUserCookie = null;
-    for(int i = 0; i < cookies.length; i++){
-        if(cookies[i].getName().equals("MyCurrentSession"))
-        {
-            currentUserCookie = cookies[i];
-            break;
-        }
-    }
-    
-    HttpSession currentUserSession = sessionManger.get(currentUserCookie.getValue());
+<%  
+    //this is the way to get the session.
+    HttpSession currentUserSession = request.getSession();
     
     String userName = currentUserSession.getAttribute("name").toString();
     String userId = currentUserSession.getAttribute("id").toString();
