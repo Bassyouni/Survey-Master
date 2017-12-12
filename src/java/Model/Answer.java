@@ -55,14 +55,6 @@ public class Answer {
         this.id = id;
     }
 
-    public String getUseriD() {
-        return userId;
-    }
-
-    public void setUser(String userId) {
-        this.userId = userId;
-    }
-
     public String getAnswer() {
         return answer;
     }

@@ -63,10 +63,18 @@ public class SaveSurveyAnswers extends HttpServlet {
                 }
                 
                 Answer answer = new Answer();
-                
                 answer.setSurveyId(surveyId);
-                answer.setUserId(userId);
                 answer.setQuestionId(entry.getKey());
+                
+                if(request.getParameter("avail").equals("Anonymous"))
+                {
+                    answer.setUserId(null); 
+                }
+                else
+                {
+                    answer.setUserId(userId);
+                }
+               
                 
                 String questionAnswer = "";
                 for(String value : entry.getValue())

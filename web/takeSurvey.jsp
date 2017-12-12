@@ -21,7 +21,7 @@
         
        <title><%=surveyName%></title>
     </head>
-    <body>
+    <body>    
        <%
            HashMap<String,String> selectAttributeMap = new HashMap();
            selectAttributeMap.put("id", id);
@@ -43,7 +43,7 @@
                     
                     for (String answer : answers)
                     {
-                        out.print("<input type=\"radio\" name=\""+ dummyQuestion.getId() +"\" value=\"" + answer + "\"> ");
+                        out.print("<input type=\"radio\" name=\""+ dummyQuestion.getId() +"\" value=\"" + answer + "\" required> ");
                         out.print(answer + "<br>");
                     }
 //                   <input type="radio" name="gender" value="male"> Male<br>
@@ -56,7 +56,7 @@
                     
                    for (String answer : answers)
                    {
-                       out.print("<input type=\"checkbox\" name=\""+ dummyQuestion.getId() +"\" value=\"" + answer + "\"> ");
+                       out.print("<input type=\"checkbox\" name=\""+ dummyQuestion.getId() +"\" value=\"" + answer + "\" checked> ");
                        out.print(answer + "<br>");
                    }
 //                   <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
@@ -64,15 +64,21 @@
                }
                else if (dummyQuestion.getType().equals(Question.FREEANSWER))
                {
-                   out.print("<input type=\"text\" name=\""+ dummyQuestion.getId() +"\">");
+                   out.print("<input type=\"text\" name=\""+ dummyQuestion.getId() +"\" required>");
                }
-               out.print("</div> <br>");
+               out.print("</div>");
            }
+           
+           out.print("<p><b>Do you want to show the creator your info?</b></p>");
+           out.print("<input type=\"radio\" name=\"avail\" value=\"Anonymous\" required> Keep me Anonymous<br>");
+           out.print("<input type=\"radio\" name=\"avail\" value=\"Show my Info\" required> Show my Info<br>");
+           out.print("<br>");
            
            out.print("<input type=\"submit\" value=\"Submit Answers\">");
            
            out.print("</form>");
        %>
+
 
     </body>
 </html>
