@@ -21,7 +21,7 @@ Pages:
 	
 	-profile.jsp ( Sanad ) (DONE).
 	
-	-takeSurvey.jsp (Bassyouni) (In Progress)
+	-takeSurvey.jsp (Bassyouni) (Done) "waiting styling"
 	
 	-administratorPanel "Calm down now, I got this" (Sanad) (InProgress)
 	
