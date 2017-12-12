@@ -16,6 +16,10 @@ import java.util.ArrayList;
 
 public class Question {
     
+    public static final String MCQ = "MCQ";
+    public static final String FREEANSWER = "free answer";
+    public static final String CHECKBOXES = "check boxes";
+    
    private int id;
    private int surveyId;
    private String type;
@@ -23,6 +27,9 @@ public class Question {
    private String givenAnswers;
    private boolean isSuspended;
    public ArrayList<Answer> answers;
+
+    public Question() {
+    }
 
     public Question(int id, int survey, String type, String question, String givenAnswers, boolean isSuspended) {
         this.id = id;

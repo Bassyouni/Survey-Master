@@ -27,14 +27,16 @@ public class Survey {
     
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     private static final String surveyTableName = "surveys";
+    private static final String questionsTableName = "question";
 
     public Survey(){
-        
+        questions = new ArrayList<>();
     }
     public Survey(int id, int owner, String Name) {
         this.id = id;
         this.ownerId = owner;
         this.name = Name;
+        questions = new ArrayList<>();
     }
 
     public int getId() {
@@ -113,6 +115,32 @@ public class Survey {
         return String.format("SurveyName: %s, OwnerId: %d", this.name, this.ownerId);
                 
     }
+    
+    public boolean getAllQuestions()
+    {
+        HashMap<String,String> selectAttributeMap = new HashMap<>();
+        selectAttributeMap.put("survey", Integer.toString(this.id));
+        ResultSet rs = databaseConnection.select(questionsTableName, selectAttributeMap);
+        
+        try {
+            while(rs.next()){
+                Question dummyQuestion = new Question();
+                dummyQuestion.setId(rs.getInt("id"));
+                dummyQuestion.setSurveyiD(rs.getInt("survey"));
+                dummyQuestion.setType(rs.getString("type"));
+                dummyQuestion.setQuestion(rs.getString("question"));
+                dummyQuestion.setGivenAnswers(rs.getString("given_answers"));
+                dummyQuestion.setIsSuspended(rs.getBoolean("is_suspended"));
+                this.questions.add(dummyQuestion);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Survey.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        System.out.println(this.questions);
+        return true;
+    }
+            
     
     
     

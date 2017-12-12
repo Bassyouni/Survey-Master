@@ -95,7 +95,7 @@
                     continue;
                 }
                 output = "<div class='post-preview'>" +
-              "<a href='#'>"+
+              "<a href='takeSurvey.jsp?id=" + currentSurvey.getId() + "&surveyName=" + currentSurvey.getName() + "'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +
