@@ -21,7 +21,7 @@ Pages:
 	
 	-profile.jsp ( Sanad ) (DONE).
 	
-	-takeSurvey.jsp 
+	-takeSurvey.jsp (Bassyouni) (In Progress)
 	
 	-administratorPanel
      		-SurveryFeed.jsp "this is for admin"
