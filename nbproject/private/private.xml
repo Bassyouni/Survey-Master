@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Home.jsp</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Router.java</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/servlet/SuspendSurvey.java</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/css/form-style.css</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/js/form-script.js</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/SignUp.jsp</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Login.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/User.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/js/change-password.js</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/ChangePassword.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/servlet/ChangePassword.java</file>
         </group>
     </open-files>
 </project-private>

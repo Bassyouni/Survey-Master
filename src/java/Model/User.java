@@ -5,8 +5,13 @@
  */
 package Model;
 
+import database.DatabaseConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,6 +34,60 @@ public class User {
         this.email = email;
         this.isSuspended = isSuspended;
     }
+
+    private User() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIsAdministrator() {
+        return isAdministrator;
+    }
+
+    public void setIsAdministrator(String isAdministrator) {
+        this.isAdministrator = isAdministrator;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIsSuspended() {
+        return isSuspended;
+    }
+
+    public void setIsSuspended(String isSuspended) {
+        this.isSuspended = isSuspended;
+    }
+    
+    
     
     public HashMap<String, String> getAttributes(){
         //`is_administrator`, `name`, `password`, `email`, `is_suspended`
@@ -45,5 +104,30 @@ public class User {
             attributes.put("is_suspended", isSuspended);
         
         return attributes;
+    }
+    
+    public static User selectUser(String id){
+        User targetUser = null;
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        HashMap<String, String> input = new HashMap<>();
+        input.put("id", id);
+        ResultSet rs = databaseConnection.select("users", input);
+        try {
+            while(rs.next()){
+                targetUser = new User(
+                        rs.getString("is_administrator"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("is_suspended")
+                );
+                
+                targetUser.setId(rs.getString("id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return targetUser;
     }
 }
