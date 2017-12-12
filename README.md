@@ -32,4 +32,6 @@ Pages:
      		-Class administrator child of User class that has functions of an administrator.
 	
 Notes: 
+
 	-Added three static varibales in Question for the question type, to be used everywere to keep them constants
+	-Each answer is seprated with a ",".
