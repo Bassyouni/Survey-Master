@@ -23,7 +23,8 @@ Pages:
 	
 	-takeSurvey.jsp (Bassyouni) (In Progress)
 	
-	-administratorPanel
+	-administratorPanel "Calm down now, I got this" (Sanad) (InProgress)
+	
      		-SurveryFeed.jsp "this is for admin"
 
      		-check it in assginment description
