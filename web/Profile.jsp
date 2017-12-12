@@ -49,7 +49,7 @@
                   <a class="nav-link" href="Home.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="Profile.jsp">Profile</a>
+                    <a class="nav-link" href="ChangePassword.jsp">Change Password</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>
