@@ -69,9 +69,11 @@
                out.print("</div>");
            }
            
+           out.print("<div>");
            out.print("<p><b>Do you want to show the creator your info?</b></p>");
            out.print("<input type=\"radio\" name=\"avail\" value=\"Anonymous\" required> Keep me Anonymous<br>");
            out.print("<input type=\"radio\" name=\"avail\" value=\"Show my Info\" required> Show my Info<br>");
+           out.print("</div>");
            out.print("<br>");
            
            out.print("<input type=\"submit\" value=\"Submit Answers\">");
