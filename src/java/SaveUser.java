@@ -83,15 +83,18 @@ public class SaveUser extends HttpServlet {
                     if (RS != null) 
                     {
                         String id = "";
+                        Boolean isAdmin = null;
                         while (RS.next()) 
                         {
                             id = RS.getString("id");
+                            isAdmin = RS.getBoolean("is_administrator");
                         }
 
                         HttpSession session = request.getSession(true);
 
                         session.setAttribute("name", name);
                         session.setAttribute("id", id);
+                        session.setAttribute("isAdmin", isAdmin);
                         session.setMaxInactiveInterval(60 * 60);
 
                         System.out.println(session.getAttribute("name") + "    " + session.getAttribute("id"));

@@ -6,7 +6,9 @@
             <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/User.java</file>
             <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/js/change-password.js</file>
             <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/ChangePassword.jsp</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/servlet/ChangePassword.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/AdminUserFeed.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/servlet/SuspendSurvey.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/AdminSurveyFeed.jsp</file>
         </group>
     </open-files>
 </project-private>

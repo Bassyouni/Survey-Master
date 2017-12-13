@@ -34,6 +34,9 @@ a {
 .suspend-link, .delete-link, .shitbox :hover{
     cursor: pointer !important;
 }
+.suspend-user-link{
+    cursor: pointer !important;
+}
 blockquote {
   font-style: italic;
   color: #868e96; }

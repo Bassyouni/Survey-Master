@@ -5,6 +5,9 @@
  */
 
 $(document).ready(function(){
+    
+    
+    
     $(".suspend-link").click(function(){
         var id = $(this).attr('id').replace('suspend-survey-', '');
         $.get("SuspendSurvey?Id=" + id, function(){

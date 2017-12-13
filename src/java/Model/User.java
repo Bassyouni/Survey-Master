@@ -121,7 +121,6 @@ public class User {
                         rs.getString("email"),
                         rs.getString("is_suspended")
                 );
-                
                 targetUser.setId(rs.getString("id"));
             }
         } catch (SQLException ex) {
@@ -130,4 +129,29 @@ public class User {
         }
         return targetUser;
     }
+    
+    public static ArrayList<User> selectAllUsers(){
+        ArrayList<User> users = new ArrayList<>();
+        User targetUser = null;
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ResultSet rs = databaseConnection.select("users");
+        try {
+            while(rs.next()){
+                targetUser = new User(
+                        rs.getString("is_administrator"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("is_suspended")
+                );
+                targetUser.setId(rs.getString("id"));
+                users.add(targetUser);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return users;
+    }
+    
 }

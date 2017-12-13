@@ -86,8 +86,22 @@
                         HttpSession s = request.getSession(true);
                         s.setAttribute("name", userSession.getAttribute("name").toString());
                         s.setAttribute("id", userSession.getAttribute("id").toString());
+                        Boolean isAdmin = (Boolean) userSession.getAttribute("isAdmin");
+                        if(isAdmin != null)
+                        {
+                            if(isAdmin.booleanValue())
+                            {
+                                response.sendRedirect("AdminSurveyFeed.jsp");
+                            }
+                            else{
+                                response.sendRedirect("Home.jsp");
+                            }
+                        }
+                        else{
+                            response.sendRedirect("Home.jsp");
+                        }
                         
-                       response.sendRedirect("Home.jsp");
+                       
                     }
                 }
             }

@@ -64,13 +64,14 @@ public class StoreTheSession extends HttpServlet {
             {
                  String id = "";
                  String name = "";
-                 
+                 Boolean isAdmin = null;
                  boolean isFound = false;
                  while (RS.next()) 
                 {                    
                     id = RS.getString("id");
                     name = RS.getString("name");
                     isFound = true;
+                    isAdmin = RS.getBoolean("is_administrator");
                 }
                  
                  if(isFound)
@@ -79,6 +80,7 @@ public class StoreTheSession extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("name", name);
                     session.setAttribute("id", id);
+                    session.setAttribute("isAdmin", isAdmin);
                     session.setMaxInactiveInterval(60 * 60);
            
                     //add session to sessionManager
@@ -89,7 +91,18 @@ public class StoreTheSession extends HttpServlet {
                     Cookie cookie = new Cookie ("MyCurrentSession",session.getId());
                     cookie.setMaxAge(60 * 60);
                     response.addCookie(cookie);
-                    response.sendRedirect("Home.jsp");  
+                    if(isAdmin != null){
+                        if(isAdmin.booleanValue()){
+                            response.sendRedirect("AdminSurveyFeed.jsp");  
+                        }
+                        else{
+                            response.sendRedirect("Home.jsp"); 
+                        }
+                    }
+                    else{
+                        response.sendRedirect("Home.jsp");
+                    }
+                      
                  }
                  else
                  {
