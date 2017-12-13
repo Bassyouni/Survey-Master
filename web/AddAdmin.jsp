@@ -103,14 +103,14 @@
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                   <label id="new-password-label">Password</label>
-                <input name="password" type="password" class="form-control" placeholder="password..." id="new-password" required data-validation-required-message="Please enter Admin password">
+                  <input name="password" type="password" class="form-control" placeholder="password..." id="new-password" required data-validation-required-message="Please enter Admin password" minlength="8" >
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label id="Confirmation-label">Confirm Password</label>
-                <input name="confirmationPassword" type="password" class="form-control" placeholder="Confirm Here..." id="confirmation" required data-validation-required-message="Please Confirm password">
+                <input name="confirmationPassword" type="password" class="form-control" placeholder="Confirm Here..." id="confirmation" required data-validation-required-message="Please Confirm password" minlength="8">
                 <p class="help-block text-danger"></p>
               </div>
             </div>

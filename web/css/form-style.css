@@ -245,3 +245,10 @@ form button:hover {
             transform: translateY(-700px) rotate(600deg);
   }
 }
+
+#captcha {
+   position: relative;
+   margin-bottom: 10px;
+   top: 0;
+   left: 150px;
+}

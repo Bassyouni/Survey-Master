@@ -7,15 +7,15 @@ package servlet;
  */
 
 import Model.User;
-import com.sun.xml.ws.security.trust.WSTrustConstants;
 import database.DatabaseConnection;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +27,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -56,13 +65,64 @@ public class SaveUser extends HttpServlet {
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String userPassword = request.getParameter("password");
-
-            //check if this email was used or not
-            HashMap<String, String> attrHash = new HashMap<>();
-            attrHash.put("email", email);
-            ResultSet checkUniqueEmailResultSet = databaseConnection.select(userTable, attrHash);
+            String reCAPTCHA = request.getParameter("g-recaptcha-response");
             
-            if (checkUniqueEmailResultSet != null) 
+            //ReCaptcha implmentation
+            URI uri = new URIBuilder()
+                .setScheme("https")
+                .setHost("www.google.com")
+                .setPath("/recaptcha/api/siteverify")
+                .setParameter("secret", "6Ld58jwUAAAAACqM8HIdtEBoFe5ZeDjYhcfIFIN0")
+                .setParameter("response", reCAPTCHA)
+                .build();
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost(uri);
+            System.out.println(httppost.getURI());
+
+            //Execute and get the response.
+            HttpResponse postResponse = httpclient.execute(httppost);
+            HttpEntity entity = postResponse.getEntity();
+
+            if (entity != null) {
+                InputStream inputStream = entity.getContent();
+                try {
+                    // parsing jason to fin the succses state
+                    JSONParser jsonParser = new JSONParser();
+                    JSONObject jsonObject = (JSONObject)jsonParser.parse(
+                    new InputStreamReader(inputStream, "UTF-8"));
+                    System.out.println(inputStream.toString());
+                    boolean isSuccses = (boolean) jsonObject.get("success");
+                    
+                    if(!isSuccses)
+                    {
+                        //This is a Robot
+                        request.setAttribute("this is a robot", "");
+                        RequestDispatcher goToSignUp = request.getRequestDispatcher("SignUp.jsp");
+                        goToSignUp.forward(request, response);
+                        return;
+                    }
+                    
+                } catch (ParseException ex) {
+                    Logger.getLogger(SaveUser.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    inputStream.close();
+                }
+            }
+            
+            
+            
+            
+            
+            
+            //check if this email was used or not
+            User checkEmailUser = new User(null,null,null,email,null);
+            
+            ResultSet checkUniqueEmailResultSet = databaseConnection.select(userTable, checkEmailUser.getAttributes());
+            
+            User checkNameAvail = new User(null, name, null, null, null);
+            ResultSet checkUniqueNameResultSet = databaseConnection.select(userTable, checkNameAvail.getAttributes());
+            
+            if (checkUniqueEmailResultSet != null && checkUniqueNameResultSet != null ) 
             {
                 if (checkUniqueEmailResultSet.next()) 
                 {
@@ -70,7 +130,15 @@ public class SaveUser extends HttpServlet {
                     request.setAttribute("emailExists", "");
                     RequestDispatcher goToSignUp = request.getRequestDispatcher("SignUp.jsp");
                     goToSignUp.forward(request, response);
-                } else 
+                } 
+                else if(checkUniqueNameResultSet.next())
+                {
+                    //email not unique and exists in the db!
+                    request.setAttribute("nameExists", "");
+                    RequestDispatcher goToSignUp = request.getRequestDispatcher("SignUp.jsp");
+                    goToSignUp.forward(request, response);
+                }
+                else 
                 {
                     //email is unique and doesnt exist in db!
 
@@ -116,6 +184,8 @@ public class SaveUser extends HttpServlet {
                     response.sendRedirect("Login.jsp");
                 }
             }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(SaveUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
