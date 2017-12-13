@@ -3,30 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package servlet.admin;
 
+import Model.Survey;
+import Model.User;
+import database.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Bassyouni
+ * @author cdc
  */
-@WebServlet(urlPatterns = {"/logout"})
-public class logout extends HttpServlet {
+@WebServlet(name = "SuspendUser", urlPatterns = {"/SuspendUser"})
+public class SuspendUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,44 +33,16 @@ public class logout extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static final String userTableName = "users";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
-             String SessionManager = "SessionManager";
-            String cookieName = "MyCurrentSession";
-            Cookie cookies [] = request.getCookies ();
-            Cookie myCookie = null;           
+            System.out.println("atleast this ran!!");
             
-            if (cookies != null)
-            {
-                for (int i = 0; i < cookies.length; i++) 
-                {
-                    if (cookies [i].getName().equals (cookieName))
-                    {
-                        myCookie = cookies[i];
-                        break;
-                    }
-                }
-            }
-            
-            if(myCookie != null)
-            {
-                String sessionID = myCookie.getValue();
-                        
-                HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
-                sessionMangerHash.remove(sessionID);
-                
-                myCookie.setValue(null);
-                myCookie.setMaxAge(0);
-                response.addCookie(myCookie);
-            }
-            else
-            {
-                System.out.println("logout.processRequest() ,, something is wrong no cookie found");
-            }
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("AdminUserFeed.jsp");
         }
     }
 
@@ -90,11 +58,24 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
+        response.setContentType("text");
+        HashMap<String, String> selectAttributeMap = new HashMap<>();
+        int userId = Integer.parseInt(request.getParameter("id"));
+        selectAttributeMap.put("id", String.valueOf(userId));
+        User currentUser = User.selectUser(String.valueOf(userId));
+        
+        HashMap<String, String> updateAttributeMap = new HashMap<>();
+        System.out.println(currentUser.getIsSuspended());
+        if(currentUser.getIsSuspended().equals("1"))
+        {
+            updateAttributeMap.put("is_suspended", "0");
+            int rows = databaseConnection.update(userTableName, updateAttributeMap, userId);
         }
+        else{
+            updateAttributeMap.put("is_suspended", "1");
+            int rows = databaseConnection.update(userTableName, updateAttributeMap, userId);
+        }
+        processRequest(request, response);
     }
 
     /**
@@ -108,11 +89,7 @@ public class logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(logout.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

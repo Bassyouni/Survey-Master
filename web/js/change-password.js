@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#confirmation').keyup(function(){
         var confirmation = $('#confirmation').val();
         var password = $('#new-password').val();
-        if(confirmation === password){
+        if(confirmation === password && pasword != ''){
             $('#new-password').css('color', '#3CE02D');
             $('#confirmation').css('color', '#3CE02D');
             $('#sendMessageButton').removeAttr("disabled");

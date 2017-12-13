@@ -116,21 +116,21 @@ public class DatabaseConnection {
              values.add(  input.get(attributes.get(i))  );
          }
          
-        String insertQuery = "Select * From survey_db." + tableName + " where ";
+        String selectQuery = "Select * From survey_db." + tableName + " where ";
         for(int i = 0; i < attributes.size(); i++){
             if(i != attributes.size() -1 )
-                insertQuery += attributes.get(i) + " = '" + values.get(i) + "' and ";
+                selectQuery += attributes.get(i) + " = '" + values.get(i) + "' and ";
             else
-                insertQuery += attributes.get(i) + " = '" + values.get(i) + "';";
+                selectQuery += attributes.get(i) + " = '" + values.get(i) + "';";
         }
         
-        //System.out.println(insertQuery);
+        System.out.println(selectQuery);
         
         
         try {
             Statement Stmt;
             Stmt = con.createStatement();
-            rs = Stmt.executeQuery(insertQuery);
+            rs = Stmt.executeQuery(selectQuery);
         } catch (SQLException ex) {
             return rs;
         }

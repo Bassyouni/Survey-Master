@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.admin;
 
-import Model.Survey;
 import Model.User;
 import database.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cdc
  */
-@WebServlet(name = "SuspendUser", urlPatterns = {"/SuspendUser"})
-public class SuspendUser extends HttpServlet {
+@WebServlet(name = "AddAdmin", urlPatterns = {"/AddAdmin"})
+public class AddAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +35,22 @@ public class SuspendUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final DatabaseConnection databaseConnection = new DatabaseConnection();
-    private static final String userTableName = "users";
-    
+    DatabaseConnection databaseConnection = new DatabaseConnection();
+    String userTableName = "users";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("atleast this ran!!");
-            
-            response.sendRedirect("AdminUserFeed.jsp");
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddAdmin</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AddAdmin at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -58,23 +66,6 @@ public class SuspendUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text");
-        HashMap<String, String> selectAttributeMap = new HashMap<>();
-        int userId = Integer.parseInt(request.getParameter("id"));
-        selectAttributeMap.put("id", String.valueOf(userId));
-        User currentUser = User.selectUser(String.valueOf(userId));
-        
-        HashMap<String, String> updateAttributeMap = new HashMap<>();
-        System.out.println(currentUser.getIsSuspended());
-        if(currentUser.getIsSuspended().equals("1"))
-        {
-            updateAttributeMap.put("is_suspended", "0");
-            int rows = databaseConnection.update(userTableName, updateAttributeMap, userId);
-        }
-        else{
-            updateAttributeMap.put("is_suspended", "1");
-            int rows = databaseConnection.update(userTableName, updateAttributeMap, userId);
-        }
         processRequest(request, response);
     }
 
@@ -89,6 +80,13 @@ public class SuspendUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if(addAdmin(request, response)){
+            response.sendRedirect("AdminUserFeed.jsp");
+        }
+        else{
+            request.getSession().setAttribute("added", "false");
+            response.sendRedirect("AddAdmin.jsp");
+        }
         processRequest(request, response);
     }
 
@@ -102,4 +100,30 @@ public class SuspendUser extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private boolean addAdmin(HttpServletRequest request, HttpServletResponse response){
+        String userName = request.getParameter("userName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        boolean added = false;
+        User admin = new User(null, userName, null, null, null);
+        ResultSet testingObjectOne = databaseConnection.select(userTableName, admin.getAttributes());
+        
+        admin = new User(null, null, null, email, null);
+        ResultSet testingObjectTwo = databaseConnection.select(userTableName, admin.getAttributes());
+        try {
+            //System.out.println(testingObjectOne.next() + " " + testingObjectTwo.next());
+            if(!testingObjectOne.next() && !testingObjectTwo.next())
+            {
+                admin = new User("1", userName, password, email, "0");
+                int rows = databaseConnection.insertInto(userTableName, admin.getAttributes());
+                if(rows == 1){
+                    added = true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("added: " + added);
+        return added;
+    }
 }

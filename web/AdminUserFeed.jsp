@@ -50,7 +50,7 @@
                   <a class="nav-link" href="AdminUserFeed.jsp">User Feed</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Add Admin</a>
+                  <a class="nav-link" href="AddAdmin.jsp">Add Admin</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>

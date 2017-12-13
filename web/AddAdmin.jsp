@@ -1,6 +1,6 @@
 <%-- 
-    Document   : AdminChangePassword
-    Created on : Dec 13, 2017, 3:05:26 PM
+    Document   : AddAdmin
+    Created on : Dec 13, 2017, 5:45:45 PM
     Author     : cdc
 --%>
 
@@ -8,27 +8,13 @@
 <!DOCTYPE html>
 <html>
     
-    <%  
-        //this is the way to get the session.
-        HttpSession currentUserSession = request.getSession();
-        String targetUserId = request.getParameter("targetUserId");
-        if(targetUserId == null){
-            response.sendRedirect("AdminUserFeed.jsp");
-        }
-        else{
-            currentUserSession.setAttribute("targetUserId", targetUserId);
-        }
-        String userName = currentUserSession.getAttribute("name").toString();
-        String userId = currentUserSession.getAttribute("id").toString();
-        Boolean validPassword = (Boolean) currentUserSession.getAttribute("validPassword");
-    %>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Sanad">
         
-        <title>ChangePassword</title>
+        <title>AddAdmin</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -78,7 +64,7 @@
               <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
                   <h1>Admin Panel</h1>
-                  <span class="subheading">Change Password</span>
+                  <span class="subheading">Add Admin</span>
                 </div>
               </div>
             </div>
@@ -87,30 +73,37 @@
         
         <!-- Main Content -->
     <div class="container">
+        <% 
+            HttpSession currentUserSession = request.getSession();
+            if(currentUserSession.getAttribute("added") != null){
+                if(currentUserSession.getAttribute("added").equals("false")){
+                    out.print("<p class='text-center text-danger wrong-note'>Name Or E-mail already Exists!!</p>");
+                    currentUserSession.setAttribute("added", null);
+                }
+            }
+            
+        %>
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <%
-              if(validPassword != null)
-              {
-                  if(!validPassword.booleanValue())
-                  {
-                      System.out.println(validPassword.booleanValue());
-                      out.print("<p class='text-center text-danger wrong-note'>You Have Entered The Wrong Password!!</p>");
-                  }
-              }
-          %>
-          <form name="sentMessage" id="contactForm" action="ChangePassword" method="Post">
+          <form name="sentMessage" id="contactForm" action="AddAdmin" method="Post">
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
-                <label>Old Password</label>
-                <input name="oldPassword" type="password" class="form-control" placeholder="oldPassword..." id="original-password" required data-validation-required-message="Please enter your Old password.">
+                <label>User Name</label>
+                <input name="userName" type="text" class="form-control" placeholder="Username..." id="user-name" required data-validation-required-message="Please enter Admin username">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
-                  <label id="new-password-label">New Password</label>
-                <input name="newPassword" type="password" class="form-control" placeholder="New password..." id="new-password" required data-validation-required-message="Please enter your New password">
+                <label>E-mail</label>
+                <input name="email" type="email" class="form-control" placeholder="E-mail..." id="user-name" required data-validation-required-message="Please enter Admin E-mail">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                  <label id="new-password-label">Password</label>
+                <input name="password" type="password" class="form-control" placeholder="password..." id="new-password" required data-validation-required-message="Please enter Admin password">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -124,7 +117,7 @@
             <br>
             <div id="success"></div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">Change</button>
+              <button type="submit" class="btn btn-primary" id="sendMessageButton">Add</button>
             </div>
           </form>
         </div>
