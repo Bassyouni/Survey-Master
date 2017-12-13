@@ -3,6 +3,7 @@
     Created on : Dec 5, 2017, 3:48:24 AM
     Author     : Bassyouni
 --%>
+<%@page import="javafx.scene.control.Alert"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Survey"%>
 <%@page import="database.DatabaseConnection"%>
@@ -40,6 +41,17 @@
             String name = userSession.getAttribute("name").toString();
             String id = userSession.getAttribute("id").toString();
         %>
+        
+        <script type="text/javascript">
+            var Msg ='<%=request.getAttribute("surveyReported")%>';
+                if (Msg != "null") 
+                {
+                    function alertName()
+                    {
+                        alert("Survey is Reported!");
+                    } 
+                }
+        </script>
         
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -95,7 +107,7 @@
                     continue;
                 }
                 output = "<div class='post-preview'>" +
-              "<a href='#'>"+
+              "<a href='takeSurvey.jsp?id=" + currentSurvey.getId() + "&surveyName=" + currentSurvey.getName() + "'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +
@@ -159,5 +171,6 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
+        <script type="text/javascript"> window.onload = alertName; </script>
     </body>
 </html>

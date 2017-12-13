@@ -21,12 +21,17 @@ Pages:
 	
 	-profile.jsp ( Sanad ) (DONE).
 	
-	-takeSurvey.jsp (Bassyouni) (In Progress)
+	-takeSurvey.jsp (Bassyouni) (Done) "waiting styling"
 	
-	-administratorPanel
+	-administratorPanel "Calm down now, I got this" (Sanad) (InProgress)
+	
      		-SurveryFeed.jsp "this is for admin"
 
      		-check it in assginment description
 
      		-Class administrator child of User class that has functions of an administrator.
 	
+Notes: 
+
+	-Added three static varibales in Question for the question type, to be used everywere to keep them constants
+	-Each answer is seprated with a ",".

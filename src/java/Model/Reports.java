@@ -5,47 +5,49 @@
  */
 package Model;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Bassyouni
  */
 public class Reports {
-    private int id;
-    private int userId;
-    private int surveyId;
+    private String id;
+    private String userId;
+    private String surveyId;
     private String comment;
 
     public Reports() {
     }
 
-    public Reports(int id, int userId, int surveyId, String comment) {
+    public Reports(String id, String userId, String surveyId, String comment) {
         this.id = id;
         this.userId = userId;
         this.surveyId = surveyId;
         this.comment = comment;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public int getSurveyId() {
+    public String getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(int surveyId) {
+    public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
     }
 
@@ -57,5 +59,18 @@ public class Reports {
         this.comment = comment;
     }
     
+    public HashMap<String, String> getAttributes(){
+        
+        HashMap<String, String> attributes = new HashMap<>();
+        
+        if(userId != null)
+            attributes.put("user", userId);
+        if(surveyId != null)
+            attributes.put("survey", surveyId);
+        if(comment != null)
+            attributes.put("comment", comment);
+        
+        return attributes;
+    }
     
 }
