@@ -86,7 +86,7 @@
             for(int i = 0; i < users.size(); i++){
                 User currentUser = users.get(i);
                 output = "<div class='post-preview' id='user-" + currentUser.getId()+ "'>" +
-              "<a href='#'>"+
+              "<a href='AdminChangePassword.jsp?targetUserId="+ currentUser.getId() + "'>"+
                 "<h2 class='post-title'>"+
                   currentUser.getName() +
                 "</h2>" +

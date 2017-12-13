@@ -10,6 +10,8 @@ import database.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +35,8 @@ public class ChangePassword extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private User currentUser;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -67,11 +71,21 @@ public class ChangePassword extends HttpServlet {
             HttpSession currentUserSession = request.getSession();
             if(changePassword(request, response)){
                 currentUserSession.setAttribute("validPassword", true);
-                response.sendRedirect("Profile.jsp");
+                if(currentUser.getIsAdministrator().equals("1"))
+                {
+                    response.sendRedirect("AdminUserFeed.jsp");
+                }
+                else
+                    response.sendRedirect("Profile.jsp");
             }
             else{
                 currentUserSession.setAttribute("validPassword", false);
-                response.sendRedirect("ChangePassword.jsp");
+                if(currentUser.getIsAdministrator().equals("1"))
+                {
+                    response.sendRedirect("AdminChangePassword.jsp?targetUserId=" + currentUserSession.getAttribute("targetUserId").toString());
+                }
+                else
+                    response.sendRedirect("ChangePassword.jsp");
             }
         processRequest(request, response);
     }
@@ -95,9 +109,18 @@ public class ChangePassword extends HttpServlet {
         
         HttpSession currentUserSession = request.getSession();
         String currentUserId = currentUserSession.getAttribute("id").toString();
-        User currentUser = User.selectUser(currentUserId);
-        
-        if(oldPassword.equals(currentUser.getPassword())  && newPassword.equals(confirmationPassword))
+        currentUser = User.selectUser(currentUserId);
+        if(currentUser.getIsAdministrator().equals("1")  && newPassword.equals(confirmationPassword)){
+             HashMap<String, String> input = new HashMap<>();
+             User targetUser = User.selectUser(currentUserSession.getAttribute("targetUserId").toString());
+             if(targetUser.getPassword().equals(oldPassword)){
+                input.put("password", newPassword);
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+                databaseConnection.update(userTableName, input, Integer.parseInt(targetUser.getId()));
+                changed = true;
+             }
+        }
+        else if(oldPassword.equals(currentUser.getPassword())  && newPassword.equals(confirmationPassword))
         {
             HashMap<String, String> input = new HashMap<>();
             input.put("password", newPassword);
