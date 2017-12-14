@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="Model.Router"%>
-
+<%@page import="mailapp.SendMail" %>
 <%@page import="java.lang.String"%>
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,6 +22,9 @@
     <body>
         
         <%
+            String user = "surveymaster.fci@gmail.com";
+            String pass = "poiuytrewq0987654321";
+            SendMail.send("maro_a992@hotmail.com", "hi", "ana aho yad ya bassiony ya nems", user, pass);
             Router router = new Router();
             String SessionManager = "SessionManager";
             String cookieName = "MyCurrentSession";
