@@ -39,6 +39,7 @@ public class SaveSurveyAnswers extends HttpServlet {
      */
     private static final DatabaseConnection databaseConnection = new DatabaseConnection();
     private static final String answerTableName = "answer";
+    private static final String surveyTableName = "surveys";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -93,6 +94,10 @@ public class SaveSurveyAnswers extends HttpServlet {
             answers.forEach((answer) -> {
                 databaseConnection.insertInto(answerTableName, answer.getAttributes());
             });
+            
+            //increment Survey counter by 1 for statistics 
+            
+            databaseConnection.incrementSurveyCounterByOne(surveyId);
             
             response.sendRedirect("Home.jsp");
             
