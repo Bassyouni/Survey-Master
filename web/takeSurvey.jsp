@@ -281,7 +281,6 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
-        <script type="text/javascript"> window.onload = alertName; </script>
        
     </body>
 </html>

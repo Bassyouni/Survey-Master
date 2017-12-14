@@ -1,9 +1,10 @@
 <%-- 
-    Document   : Profile
-    Created on : Dec 10, 2017, 3:13:39 PM
-    Author     : Sanad
+    Document   : Statistics.jsp
+    Created on : Dec 14, 2017, 3:20:04 AM
+    Author     : cdc
 --%>
 
+<%@page import="Model.Answer"%>
 <%@page import="Model.Survey"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
@@ -12,9 +13,20 @@
 <%  
     //this is the way to get the session.
     HttpSession currentUserSession = request.getSession();
+    String numberOfPeopleWhoTookThisSurvey = "1";
+    String numberOfPeopleWhoReportedThisSurvey = "2";
     
     String userName = currentUserSession.getAttribute("name").toString();
     String userId = currentUserSession.getAttribute("id").toString();
+    String SurveyId = request.getParameter("surveyId");
+    HashMap<String, String> attributeMap = new HashMap<String,String>();
+    attributeMap.put("id", SurveyId);
+    Survey currentSurvey = Survey.getSurvey(Integer.parseInt(SurveyId), attributeMap);
+    
+    attributeMap.clear();
+    attributeMap.put("survey_id", SurveyId);
+    int anonymosUsers = Answer.getAnonymosUsers(attributeMap);
+    int knownUsers = Answer.getKnownUsers(attributeMap);
 %>
 <html lang="en">
     <head>
@@ -22,7 +34,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title><%= userName%></title>
+        <title>Statistics</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -58,16 +70,15 @@
             </div>
           </div>
         </nav>
-        
         <!-- Page Header -->
-        <header class="masthead" style="background-image: url('img/about-bg.jpg')">
+        <header class="masthead" style="background-image: url('img/statistics.jpg')">
           <div class="overlay"></div>
           <div class="container">
             <div class="row">
               <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
-                  <h1>Welcome, <%= userName %></h1>
-                  <span class="subheading">Here you can manage your surveys.</span>
+                  <h1>Statistics</h1>
+                  <span class="subheading">Here you can see !</span>
                 </div>
               </div>
             </div>
@@ -79,41 +90,45 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             
             
-        <%
-            ArrayList<Survey> surveys = Survey.getAllSurveys();
-            String output;
-            for(int i = 0; i < surveys.size(); i++){
-                Survey currentSurvey = surveys.get(i);
-                if(currentSurvey.getOwnerId() != Integer.parseInt(userId)){
-                    continue;
-                }
-                output = "<div class='post-preview' id='survey-" + currentSurvey.getId()+ "'>" +
-              "<a href='Statistics.jsp?surveyId="+ currentSurvey.getId() + "'>"+
-                "<h2 class='post-title'>"+
-                  currentSurvey.getName() +
-                "</h2>" +
-                "<h3 class='post-subtitle'>"+
-                  "this is a description"+
-                "</h3>"+
-              "</a>"+
-              "<p class='post-meta'>"; 
-                if(currentSurvey.isSuspended()){
-                    output += "<a id='suspend-survey-" + currentSurvey.getId() +
-                            "' class='text-success suspend-link'>Resume</a>"+ "   ";
-                }
-                else{
-                    output += "<a id='suspend-survey-" + currentSurvey.getId() + 
-                            "' class='text-warning suspend-link'>Suspend</a>"+ "   ";
-                }
-                
-                output += "<a id='delete-survey-" + currentSurvey.getId() + 
-                        "' class='text-danger delete-link'>Delete" + "</a>"+
-              "</p>" +
-                "<hr>"+
-            "</div>";
-                out.print(output);
-            }
-        %>
+        <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                  <%= currentSurvey.getName() %>
+              </h2>
+            </a>
+              <h3 class="post-subtitle text-success">
+                Number of People who took this survey: <%= numberOfPeopleWhoTookThisSurvey %>
+              </h3>
+
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on September 24, 2017</p>
+          </div>
+          <hr>
+          
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                  <%= currentSurvey.getName() %>
+              </h2>
+            </a>
+              <h3 class="post-subtitle text-warning">
+                Number of People who reported this survey: <%= numberOfPeopleWhoReportedThisSurvey %>
+              </h3>
+
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on September 24, 2017</p>
+          </div>
+              
+          <div id="piechart"></div>
+          
+        </div>
+      </div>
+    </div>
                 </div>
             </div>
         </div>
@@ -162,6 +177,28 @@
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
         <script src="js/ajax-code.js"></script>
-        
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            // Load google charts
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw the chart and set the chart values
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['users', 'anonymos vs known'],
+              ['KnownUser', <%= knownUsers %>],
+              ['AnonymosUser', <%= anonymosUsers %>]
+            ]);
+
+              // Optional; add a title and set the width and height of the chart
+              var options = {'title':'Anonymos vs Known', 'width':550, 'height':400};
+
+              // Display the chart inside the <div> element with id="piechart"
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+
+        </script>
     </body>
 </html>
