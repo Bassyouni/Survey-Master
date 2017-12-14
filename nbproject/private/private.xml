@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/css/takeSurvey-style.css</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/ChangePassword.jsp</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Router.java</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/takeSurvey.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Home.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Answer.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Profile.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/js/pie-chart.js</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Question.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Statistics.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Survey.java</file>
             <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/database/DatabaseConnection.java</file>
-            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/AdminSurveyFeed.jsp</file>
         </group>
     </open-files>
 </project-private>

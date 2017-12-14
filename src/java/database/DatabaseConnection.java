@@ -182,4 +182,19 @@ public class DatabaseConnection {
          
     }
     
+    public int incrementSurveyCounterByOne(String surveyId)
+    {
+        int rowsAffected = -1;
+        String sql = "UPDATE surveys SET user_counter = user_counter + 1 WHERE id = '" + surveyId + "'";
+        
+        try {
+            Statement statement = con.createStatement();
+            rowsAffected = statement.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return rowsAffected;
+        }
+        return rowsAffected;
+    }
+    
 }
