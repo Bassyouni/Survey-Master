@@ -10,18 +10,39 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/form-style.css" rel="stylesheet">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
         <title>Sign Up</title>
     </head>
     <body>
             <%
-                                        if(request.getAttribute("emailExists") != null)
-                                        {
-                                            String output = "<div class='incorrect-box'>\n" +
-                        "            <p>There is a profile with the same email, login with it </p>\n" +
-                        "        </div>";
-                                            out.print(output);
-                                            request.removeAttribute("emailExists");
-                                        }
+                
+                if(request.getAttribute("emailExists") != null)
+                {
+                    String output = "<div class='incorrect-box'>\n" +
+                    "            <p>There is a profile with the same email, login with it </p>\n" +
+                    "        </div>";
+                    out.print(output);
+                    request.removeAttribute("emailExists");
+                }
+                
+                if(request.getAttribute("this is a robot") != null)
+                {
+                    String output = "<div class='incorrect-box'>\n" +
+                    "            <p>Your a Robet, Robo Shit </p>\n" +
+                    "        </div>";
+                    out.print(output);
+                    request.removeAttribute("this is a robot");
+                }
+                
+                if(request.getAttribute("nameExists") != null)
+                {
+                    String output = "<div class='incorrect-box'>\n" +
+                    "            <p>This Name Exists please Try something else</p>\n" +
+                    "        </div>";
+                    out.print(output);
+                    request.removeAttribute("nameExists");
+                }
+                                        
                                     %>
             <div class='wrapper'>
                     <div class='container'>
@@ -31,7 +52,9 @@
                                     <input class='input' type='text' name='name' placeholder='Name' required='true'>
                                     <input class='input' type='email' name='email' placeholder='Email' required='true'>
                                     <input class='input' type='password' name='password' placeholder='Password' required='true'>
+                                    <div class="g-recaptcha" id="captcha" data-sitekey="6Ld58jwUAAAAAOVD8WJjKW6baMNBEJab3Krx78UB"></div>
                                     <Button type='submit' id='login-button'>SignUp</button
+                                    
                             </form>
                     </div>
         
