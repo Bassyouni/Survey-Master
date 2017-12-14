@@ -82,7 +82,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             
-            
+              <a href='AdminSendMail.jsp?userId=all' class="text-center text-primary"> Email All Users</a>
         <%
             ArrayList<User> users = User.selectAllUsers();
             String output;
@@ -107,7 +107,8 @@
                             "' class='text-warning suspend-user-link'>Suspend</a>"+ "   ";
                 }
                 
-                output +=
+                output += "<a href='AdminSendMail.jsp?userId=" + currentUser.getId() + "'" + 
+                            "' class='text-primary'>Send E-mail</a>"+
               "</p>" +
                 "<hr>"+
             "</div>";

@@ -26,7 +26,7 @@
             {
                 String user = "surveymaster.fci@gmail.com";
                 String pass = "poiuytrewq0987654321";
-                SendMail.send("maro_a992@hotmail.com", "hi", "ana aho yad ya bassiony ya nems", user, pass);
+                SendMail.send("yosef_sanad@hotmail.com", "hi", "ana aho yad ya bassiony ya nems");
             }
             
             Router router = new Router();

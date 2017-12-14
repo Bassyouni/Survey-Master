@@ -25,25 +25,23 @@ public class DatabaseConnection {
     
     private static final String url = "jdbc:mysql://localhost:3306/survey_db";
     private static final String user = "root";
-    private static final String password = "root";
+    private static final String password = "24972052";
     
     private static Connection con;
     
     public DatabaseConnection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connect();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        connect();
     }
     
     private boolean connect(){
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
