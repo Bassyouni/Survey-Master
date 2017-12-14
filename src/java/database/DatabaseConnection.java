@@ -197,4 +197,23 @@ public class DatabaseConnection {
         return rowsAffected;
     }
     
+    public ResultSet getSurveyCount(String surveyId)
+    {
+        ResultSet rs = null;
+        int rowsAffected = -1;
+        
+        String sql = "SELECT user_counter FROM survey_db.surveys WHERE id = '" + surveyId + "';";
+        
+        try {
+            Statement Stmt;
+            Stmt = con.createStatement();
+            rs = Stmt.executeQuery(sql);
+             
+        } catch (SQLException ex) {
+            return rs;
+        }
+        
+        return rs;
+    }
+    
 }

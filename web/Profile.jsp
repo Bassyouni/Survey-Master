@@ -88,7 +88,7 @@
                     continue;
                 }
                 output = "<div class='post-preview' id='survey-" + currentSurvey.getId()+ "'>" +
-              "<a href='#'>"+
+              "<a href='Statistics.jsp?surveyId="+ currentSurvey.getId() + "'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +

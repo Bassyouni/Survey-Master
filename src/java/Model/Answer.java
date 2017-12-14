@@ -5,7 +5,13 @@
  */
 package Model;
 
+import database.DatabaseConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +23,8 @@ public class Answer {
     private String answer;
     private String questionId;
     private String surveyId;
+    
+    private static final String TABLE_NAME = "answer";
 
     public Answer() {
     }
@@ -29,6 +37,27 @@ public class Answer {
         this.questionId = questionId;
         this.surveyId = surveyId;
 
+    }
+    
+    public ArrayList<Answer> getAnswers(HashMap<String, String> attribbutes){
+        ArrayList<Answer> answers = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ResultSet rs = databaseConnection.select(TABLE_NAME, attribbutes);
+        
+        try {
+            while(rs.next())
+            {
+                answers.add(new Answer(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5))
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Answer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answers;
     }
 
     public String getUserId() {
@@ -87,5 +116,25 @@ public class Answer {
         return attributes;
     }
     
+    public static int getAnonymosUsers(HashMap<String, String> attribbutes){
+        ArrayList<Answer> answers = new Answer().getAnswers(attribbutes);
+        int userCounter = 0;
+        for(int i = 0; i < answers.size(); i++){
+            if(answers.get(i).getUserId() == null){
+                userCounter++;
+            }
+        }
+        return userCounter;
+    }
     
+    public static int getKnownUsers(HashMap<String, String> attribbutes){
+        ArrayList<Answer> answers = new Answer().getAnswers(attribbutes);
+        int userCounter = 0;
+        for(int i = 0; i < answers.size(); i++){
+            if(answers.get(i).getUserId() != null){
+                userCounter++;
+            }
+        }
+        return userCounter;
+    }
 }

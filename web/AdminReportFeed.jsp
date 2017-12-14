@@ -1,9 +1,10 @@
 <%-- 
-    Document   : AdminUserFeed
-    Created on : Dec 12, 2017, 6:52:32 PM
+    Document   : Report.jsp
+    Created on : Dec 13, 2017, 10:03:49 PM
     Author     : cdc
 --%>
 
+<%@page import="Model.Reports"%>
 <%@page import="Model.User"%>
 <%@page import="Model.Survey"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,7 +21,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Admin Panel</title>
+        <title>Report Feed</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -71,7 +72,7 @@
               <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
                   <h1>Admin Panel</h1>
-                  <span class="subheading">Here you can manage everything...</span>
+                  <span class="subheading">Every Report on the system...</span>
                 </div>
               </div>
             </div>
@@ -84,31 +85,21 @@
             
             
         <%
-            ArrayList<User> users = User.selectAllUsers();
+            ArrayList<Reports> reports = Reports.getAllReports();
             String output;
-            for(int i = 0; i < users.size(); i++){
-                User currentUser = users.get(i);
-                output = "<div class='post-preview' id='user-" + currentUser.getId()+ "'>" +
-              "<a href='AdminChangePassword.jsp?targetUserId="+ currentUser.getId() + "'>"+
-                "<h2 class='post-title'>"+
-                  currentUser.getName() +
+            for(int i = 0; i < reports.size(); i++){
+                Reports currentReport = reports.get(i);
+                output = "<div class='post-preview' id='user-" + currentReport.getId()+ "'>" +
+              "<a href='AdminChangePassword.jsp?targetUserId="+ currentReport.getId() + "'>"+
+                "<h2 class='post-title'>Report ID: "+
+                  currentReport.getId() +
                 "</h2>" +
                 "<h3 class='post-subtitle'>"+
-                  ""+ currentUser.getPassword() + 
+                  currentReport.getComment() + 
                 "</h3>"+
               "</a>"+
-              "<p class='post-meta'>"; 
-                if(currentUser.getIsSuspended().equals("1")){
-                    output += "<a id='suspend-user-" + currentUser.getId() +
-                            "' class='text-success suspend-user-link'>Resume</a>"+ "   ";
-                }
-                else{
-                    output += "<a id='suspend-user-" + currentUser.getId() + 
-                            "' class='text-warning suspend-user-link'>Suspend</a>"+ "   ";
-                }
-                
-                output +=
-              "</p>" +
+              "<p class='post-meta'>";
+                output += "</p>" +
                 "<hr>"+
             "</div>";
                 out.print(output);
@@ -165,3 +156,4 @@
         
     </body>
 </html>
+

@@ -5,13 +5,21 @@
  */
 package Model;
 
+import database.DatabaseConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Bassyouni
  */
 public class Reports {
+    private static final String TABLE_NAME = "reports";
+    
     private String id;
     private String userId;
     private String surveyId;
@@ -71,6 +79,27 @@ public class Reports {
             attributes.put("comment", comment);
         
         return attributes;
+    }
+    
+    public static ArrayList<Reports> getAllReports(){
+        ArrayList<Reports> reports = new ArrayList<>();
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ResultSet rs = databaseConnection.select(TABLE_NAME);
+        Reports report;
+        try {
+            while(rs.next()){
+                report = new Reports();
+                report.setComment(rs.getString("comment"));
+                report.setId(rs.getString("id"));
+                report.setSurveyId(rs.getString("survey"));
+                report.setUserId(rs.getString("user"));
+                reports.add(report);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Reports.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return reports;
     }
     
 }

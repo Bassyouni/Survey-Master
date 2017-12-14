@@ -1,18 +1,33 @@
 <%-- 
-    Document   : AdminUserFeed
-    Created on : Dec 12, 2017, 6:52:32 PM
+    Document   : Statistics.jsp
+    Created on : Dec 14, 2017, 3:20:04 AM
     Author     : cdc
 --%>
 
-<%@page import="Model.User"%>
+<%@page import="Model.Answer"%>
 <%@page import="Model.Survey"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <%  
     //this is the way to get the session.
     HttpSession currentUserSession = request.getSession();
     
     String userName = currentUserSession.getAttribute("name").toString();
     String userId = currentUserSession.getAttribute("id").toString();
+    String SurveyId = request.getParameter("surveyId");
+    HashMap<String, String> attributeMap = new HashMap<String,String>();
+    attributeMap.put("id", SurveyId);
+    Survey currentSurvey = Survey.getSurvey(Integer.parseInt(SurveyId), attributeMap);
+    
+    attributeMap.clear();
+    attributeMap.put("survey_id", SurveyId);
+    int anonymosUsers = Answer.getAnonymosUsers(attributeMap);
+    int knownUsers = Answer.getKnownUsers(attributeMap);
+    
+    String numberOfPeopleWhoTookThisSurvey = String.valueOf(currentSurvey.getSurveyCount());
+    String numberOfPeopleWhoReportedThisSurvey = String.valueOf(currentSurvey.getNumberOfReports());
 %>
 <html lang="en">
     <head>
@@ -20,7 +35,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Admin Panel</title>
+        <title>Statistics</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,7 +51,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
-              <a class="navbar-brand" href="AdminSurveyFeed.jsp">Survey Master</a>
+              <a class="navbar-brand" href="Home.jsp">Survey Master</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               Menu
               <i class="fa fa-bars"></i>
@@ -44,16 +59,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="AdminSurveyFeed.jsp">Survey Feed</a>
+                  <a class="nav-link" href="Home.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="AdminUserFeed.jsp">User Feed</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="AddAdmin.jsp">Add Admin</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="AdminReportFeed.jsp">Reports</a>
+                    <a class="nav-link" href="ChangePassword.jsp">Change Password</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>
@@ -62,16 +71,15 @@
             </div>
           </div>
         </nav>
-        
         <!-- Page Header -->
-        <header class="masthead" style="background-image: url('img/Admin-wallpaper.jpg')">
+        <header class="masthead" style="background-image: url('img/statistics.jpg')">
           <div class="overlay"></div>
           <div class="container">
             <div class="row">
               <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="page-heading">
-                  <h1>Admin Panel</h1>
-                  <span class="subheading">Here you can manage everything...</span>
+                  <h1>Statistics</h1>
+                  <span class="subheading">Here you can see !</span>
                 </div>
               </div>
             </div>
@@ -83,37 +91,45 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             
             
-        <%
-            ArrayList<User> users = User.selectAllUsers();
-            String output;
-            for(int i = 0; i < users.size(); i++){
-                User currentUser = users.get(i);
-                output = "<div class='post-preview' id='user-" + currentUser.getId()+ "'>" +
-              "<a href='AdminChangePassword.jsp?targetUserId="+ currentUser.getId() + "'>"+
-                "<h2 class='post-title'>"+
-                  currentUser.getName() +
-                "</h2>" +
-                "<h3 class='post-subtitle'>"+
-                  ""+ currentUser.getPassword() + 
-                "</h3>"+
-              "</a>"+
-              "<p class='post-meta'>"; 
-                if(currentUser.getIsSuspended().equals("1")){
-                    output += "<a id='suspend-user-" + currentUser.getId() +
-                            "' class='text-success suspend-user-link'>Resume</a>"+ "   ";
-                }
-                else{
-                    output += "<a id='suspend-user-" + currentUser.getId() + 
-                            "' class='text-warning suspend-user-link'>Suspend</a>"+ "   ";
-                }
-                
-                output +=
-              "</p>" +
-                "<hr>"+
-            "</div>";
-                out.print(output);
-            }
-        %>
+        <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                  <%= currentSurvey.getName() %>
+              </h2>
+            </a>
+              <h3 class="post-subtitle text-success">
+                Number of People who took this survey: <%= numberOfPeopleWhoTookThisSurvey %>
+              </h3>
+
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on September 24, 2017</p>
+          </div>
+          <hr>
+          
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                  <%= currentSurvey.getName() %>
+              </h2>
+            </a>
+              <h3 class="post-subtitle text-warning">
+                Number of People who reported this survey: <%= numberOfPeopleWhoReportedThisSurvey %>
+              </h3>
+
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on September 24, 2017</p>
+          </div>
+              
+          <div id="piechart"></div>
+          
+        </div>
+      </div>
+    </div>
                 </div>
             </div>
         </div>
@@ -161,7 +177,29 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
-        <script src="js/user-feed-ajax.js" type="text/javascript"></script>
-        
+        <script src="js/ajax-code.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            // Load google charts
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw the chart and set the chart values
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['users', 'anonymos vs known'],
+              ['KnownUser', <%= knownUsers %>],
+              ['AnonymosUser', <%= anonymosUsers %>]
+            ]);
+
+              // Optional; add a title and set the width and height of the chart
+              var options = {'title':'Anonymos vs Known', 'width':550, 'height':400};
+
+              // Display the chart inside the <div> element with id="piechart"
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+
+        </script>
     </body>
 </html>

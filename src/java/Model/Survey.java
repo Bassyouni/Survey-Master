@@ -141,7 +141,44 @@ public class Survey {
         return true;
     }
             
+    public int getSurveyCount()
+    {
+        ResultSet rs = databaseConnection.getSurveyCount(Integer.toString(this.id));
+        int count = -1;
+        if(rs != null)
+            {
+            try {
+                while(rs.next())
+                {
+                    count = rs.getInt("user_counter");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Survey.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        return count;
+    }
     
+    public int getNumberOfReports()
+    {
+        HashMap<String,String> attributs = new HashMap<>();
+        attributs.put("survey", String.valueOf(id));
+        String reportTableName = "reports";
+        ResultSet rs = databaseConnection.select(reportTableName, attributs);
+        int count = 0;
+        if(rs != null)
+            {
+            try {
+                while(rs.next())
+                {
+                    count += 1;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Survey.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        return count;
+    }
     
     
 }

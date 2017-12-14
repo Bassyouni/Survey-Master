@@ -22,9 +22,13 @@
     <body>
         
         <%
-            String user = "surveymaster.fci@gmail.com";
-            String pass = "poiuytrewq0987654321";
-            SendMail.send("maro_a992@hotmail.com", "hi", "ana aho yad ya bassiony ya nems", user, pass);
+            if(false)
+            {
+                String user = "surveymaster.fci@gmail.com";
+                String pass = "poiuytrewq0987654321";
+                SendMail.send("maro_a992@hotmail.com", "hi", "ana aho yad ya bassiony ya nems", user, pass);
+            }
+            
             Router router = new Router();
             String SessionManager = "SessionManager";
             String cookieName = "MyCurrentSession";

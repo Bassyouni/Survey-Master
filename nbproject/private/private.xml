@@ -3,9 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Bassyouni/Desktop/Survey%20Assginment/web/Login.jsp</file>
             <file>file:/C:/Users/Bassyouni/Desktop/Survey%20Assginment/src/java/mailapp/SendMail.java</file>
             <file>file:/C:/Users/Bassyouni/Desktop/Survey%20Assginment/src/java/mailapp/MailApp.java</file>
+=======
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Home.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Answer.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Profile.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/js/pie-chart.js</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Question.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/web/Statistics.jsp</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/Model/Survey.java</file>
+            <file>file:/C:/Users/cdc/Desktop/SurveyAssginment/src/java/database/DatabaseConnection.java</file>
+>>>>>>> 597d9592721cfd21d80e1e8c709d8adf38e38981
         </group>
     </open-files>
 </project-private>
