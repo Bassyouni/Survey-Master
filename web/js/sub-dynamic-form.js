@@ -8,7 +8,7 @@
 /* global radioAnswerCounter */
 
 $(document).ready(function() {
-    $('.radio-answer-button').click(function (){
+    $('.radio-answer-button').unbind().click(function (){
         var id = $(this).attr('id').replace('radio-answer-button-', '');
         radioAnswerCounter[parseInt(id-1)]++;
         $('.check-answer-container-' + id).append(`<div class="control-group">
