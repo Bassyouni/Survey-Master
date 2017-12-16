@@ -132,7 +132,10 @@
 
         <!-- Custom scripts for this template -->
         <script src="js/clean-blog.min.js"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="js/dynamic-form.js" type="text/javascript"></script>
+        <div id="script-div">
+            <script src="js/sub-dynamic-form.js" type="text/javascript"></script>
+        </div>
     </body>
+    
 </html>
