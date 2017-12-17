@@ -18,7 +18,6 @@ $(document).ready(function() {
                         <input name='radio-question-` + id + '-answer-' + radioAnswerCounter[parseInt(id-1)] + `' type="text" class="form-control" placeholder="Add Radio Answer here..." id="radio-question-` + id + `-answer-` + radioAnswerCounter[parseInt(id-1)] + `" required data-validation-required-message="Please enter your Question." >
                       </div>
                     </div>`);
-        alert('radio-question-' + id + 'answer-' + radioAnswerCounter[parseInt(id-1)]);
     });
     
     /*name is 'check-question-1-answer-2'*/
@@ -31,6 +30,5 @@ $(document).ready(function() {
                         <input name='check-question-` + id + '-answer-' + checkAnswerCounter[parseInt(id-1)] + `' type="text" class="form-control" placeholder="Add Radio Answer here..." id="radio-question-` + id + `-answer-` + checkAnswerCounter[parseInt(id-1)] + `" required data-validation-required-message="Please enter your Question." >
                       </div>
                     </div>`);
-        alert('check-question-' + id + '-answer-' + checkAnswerCounter[parseInt(id-1)]);
     });
 });

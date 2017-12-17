@@ -105,13 +105,18 @@
             String output;
             for(int i = 0; i < surveys.size(); i++){
                 Survey currentSurvey = surveys.get(i);
+                currentSurvey.getAllQuestions();
+                
+//                if(currentSurvey.getOwnerId() == Integer.getInteger(id))
+//                    continue;
+                
                 output = "<div class='post-preview'>" +
               "<a href='takeSurvey.jsp?id=" + currentSurvey.getId() + "&surveyName=" + currentSurvey.getName() + "'>"+
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +
                 "<h3 class='post-subtitle'>"+
-                  "this is a description"+
+                  "Number Of Questions: "+ currentSurvey.questions.size() +
                 "</h3>"+
               "</a>"+
               "<p class='post-meta'>Posted by: " + 

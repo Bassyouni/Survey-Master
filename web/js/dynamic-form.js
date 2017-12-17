@@ -37,7 +37,6 @@ $(document).ready(function() {
         radioQuestionCounter++;
         questionCounter++;
         radioAnswerCounter.push(0);
-        alert(radioAnswerCounter);
         $('.question-container').append(
                     `<div class="control-group">
                       <div class="form-group floating-label-form-group controls">
@@ -55,7 +54,6 @@ $(document).ready(function() {
                 );
         
         $('#script-div').remove();
-        alert('deleted');
         $('body').append(`<div id="script-div">
             <script src="js/sub-dynamic-form.js" type="text/javascript"></script>
         </div>`);
@@ -66,7 +64,6 @@ $(document).ready(function() {
         checkQuestionCounter++;
         questionCounter++;
         checkAnswerCounter.push(0);
-        alert(checkAnswerCounter);
         $('.question-container').append(
                     `<div class="control-group">
                       <div class="form-group floating-label-form-group controls">
