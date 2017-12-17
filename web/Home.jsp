@@ -105,10 +105,6 @@
             String output;
             for(int i = 0; i < surveys.size(); i++){
                 Survey currentSurvey = surveys.get(i);
-                if(currentSurvey.getOwnerId() == Integer.parseInt(id))
-                {
-                    continue;
-                }
                 output = "<div class='post-preview'>" +
               "<a href='takeSurvey.jsp?id=" + currentSurvey.getId() + "&surveyName=" + currentSurvey.getName() + "'>"+
                 "<h2 class='post-title'>"+

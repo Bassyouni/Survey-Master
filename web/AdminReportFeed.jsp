@@ -90,7 +90,7 @@
             for(int i = 0; i < reports.size(); i++){
                 Reports currentReport = reports.get(i);
                 output = "<div class='post-preview' id='user-" + currentReport.getId()+ "'>" +
-              "<a href='AdminChangePassword.jsp?targetUserId="+ currentReport.getId() + "'>"+
+              "<a>"+
                 "<h2 class='post-title'>Report ID: "+
                   currentReport.getId() +
                 "</h2>" +

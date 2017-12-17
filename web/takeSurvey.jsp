@@ -56,6 +56,9 @@
                   <a class="nav-link" href="Profile.jsp">Profile</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="AddSurvey.jsp">Add Survey</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>
                 </li>
               </ul>

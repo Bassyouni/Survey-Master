@@ -71,6 +71,23 @@ public class Survey {
         this.suspended = suspended;
     }
     
+    public static Survey getSurvey(HashMap<String, String> selectAttributeMap){
+        ResultSet rs = databaseConnection.select(surveyTableName, selectAttributeMap);
+        Survey dummySurvey = null;
+        try {
+            while(rs.next()){
+                dummySurvey = new Survey();
+                dummySurvey.setId(rs.getInt("id"));
+                dummySurvey.setOwnerId(rs.getInt("owner"));
+                dummySurvey.setName(rs.getString("name"));
+                dummySurvey.setSuspended(rs.getBoolean("isSuspended"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Survey.class.getName()).log(Level.SEVERE, null, ex);
+            return dummySurvey;
+        }
+        return dummySurvey;
+    }
     public static Survey getSurvey(int id, HashMap<String, String> selectAttributeMap){
         ResultSet rs = databaseConnection.select(surveyTableName, selectAttributeMap);
         Survey dummySurvey = null;
@@ -130,7 +147,6 @@ public class Survey {
                 dummyQuestion.setType(rs.getString("type"));
                 dummyQuestion.setQuestion(rs.getString("question"));
                 dummyQuestion.setGivenAnswers(rs.getString("given_answers"));
-                dummyQuestion.setIsSuspended(rs.getBoolean("is_suspended"));
                 this.questions.add(dummyQuestion);
             }
         } catch (SQLException ex) {

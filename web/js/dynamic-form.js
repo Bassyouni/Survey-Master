@@ -27,6 +27,8 @@ $(document).ready(function() {
                         <label>Question-`+ questionCounter + `</label>
                         <input name='text-question-` + textQuestionCounter + `' type="text" class="form-control" placeholder="Add survey name" id="text-question-` + textQuestionCounter + `" required data-validation-required-message="Please enter your Question." >
                       </div>
+        <hr>
+        <br>
                     </div>`);
     }
     
@@ -48,7 +50,7 @@ $(document).ready(function() {
                     </div>
         <br>
                     <button type='button' class='radio-answer-button btn btn-warning' id='radio-answer-button-` + radioQuestionCounter +`'>Add Answer</button>
-                    
+                    <hr>
            <br> `
                 );
         
@@ -77,7 +79,7 @@ $(document).ready(function() {
                     </div>
         <br>
                     <button type='button' class='check-answer-button btn btn-warning' id='check-answer-button-` + checkQuestionCounter +`'>Add Answer</button>
-                    
+                    <hr>
            <br> `
                 );
         

@@ -78,7 +78,7 @@ public class DatabaseConnection {
                 insertQuery +=  "'" + values.get(i) + "'); " ;
         }
         
-        //System.out.println(insertQuery);
+        System.out.println(insertQuery);
         //Executing the query
         Statement Stmt;
         try {

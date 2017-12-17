@@ -66,13 +66,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                <form name="sentMessage" id="contactForm" action="AddSurvey" method="Post">
+                <form name="sentMessage" id="contactForm" action="AddSurvey" method="Get">
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Survey Name</label>
                         <input name="survey-name" type="text" class="form-control" placeholder="Add survey name" id="survey-name" required data-validation-required-message="Please enter your survey name." minlength="8">
                       </div>
                     </div>
+                    <br>
                     <div class="question-container">
                         
                     </div>

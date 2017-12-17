@@ -19,7 +19,7 @@
     String SurveyId = request.getParameter("surveyId");
     HashMap<String, String> attributeMap = new HashMap<String,String>();
     attributeMap.put("id", SurveyId);
-    Survey currentSurvey = Survey.getSurvey(Integer.parseInt(SurveyId), attributeMap);
+    Survey currentSurvey = Survey.getSurvey(attributeMap);
     
     attributeMap.clear();
     attributeMap.put("survey_id", SurveyId);
@@ -62,7 +62,10 @@
                   <a class="nav-link" href="Home.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ChangePassword.jsp">Change Password</a>
+                  <a class="nav-link" href="Profile.jsp">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="AddSurvey.jsp">Add Survey</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="logout">Log Out</a>
@@ -95,7 +98,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-preview">
-            <a href="post.html">
+            <a>
               <h2 class="post-title">
                   <%= currentSurvey.getName() %>
               </h2>
@@ -111,7 +114,7 @@
           <hr>
           
           <div class="post-preview">
-            <a href="post.html">
+            <a >
               <h2 class="post-title">
                   <%= currentSurvey.getName() %>
               </h2>

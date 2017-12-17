@@ -61,7 +61,7 @@ public class SuspendSurvey extends HttpServlet {
         HashMap<String, String> selectAttributeMap = new HashMap<>();
         int surveyId = Integer.parseInt(request.getParameter("Id"));
         selectAttributeMap.put("id", String.valueOf(surveyId));
-        Survey currentSurvey = Survey.getSurvey(surveyId, selectAttributeMap);
+        Survey currentSurvey = Survey.getSurvey(selectAttributeMap);
         
         HashMap<String, String> updateAttributeMap = new HashMap<>();
         updateAttributeMap = new HashMap<>();

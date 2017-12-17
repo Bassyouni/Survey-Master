@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Question {
    public ArrayList<Answer> answers;
 
     public Question() {
+        surveyId = -99;
     }
 
     public Question(int id, int survey, String type, String question, String givenAnswers, boolean isSuspended) {
@@ -87,6 +89,18 @@ public class Question {
     public void setIsSuspended(boolean isSuspended) {
         this.isSuspended = isSuspended;
     }
-   
-   
+    
+    public HashMap<String, String> getAttributes(){
+        HashMap<String, String> attributes = new HashMap<>();
+        if(this.surveyId != -99)
+            attributes.put("survey", String.valueOf(this.surveyId));
+        if(this.type != null)
+            attributes.put("type", this.type);
+        if(this.question != null)
+            attributes.put("question", this.question);
+        if(this.givenAnswers != null)
+            attributes.put("given_answers", this.givenAnswers);
+        
+        return attributes;
+    }
 }
