@@ -4,6 +4,18 @@
     Author     : cdc
 --%>
 
+<%
+    HttpSession currentUserSession = request.getSession();
+    
+    if(currentUserSession.getAttribute("id") == null)
+    {
+        //session has ended
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+
+%>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">

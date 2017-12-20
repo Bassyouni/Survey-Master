@@ -71,6 +71,8 @@ public class logout extends HttpServlet {
                 myCookie.setValue(null);
                 myCookie.setMaxAge(0);
                 response.addCookie(myCookie);
+                
+                request.getSession().invalidate();
             }
             else
             {

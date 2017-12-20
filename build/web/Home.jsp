@@ -38,8 +38,20 @@
             Router router = new Router();
             HttpSession userSession = request.getSession();
             
-            String name = userSession.getAttribute("name").toString();
-            String id = userSession.getAttribute("id").toString();
+            String name = "";
+            String id = "";
+            
+            if(userSession.getAttribute("id") != null)
+            {
+                name = userSession.getAttribute("name").toString();
+                id = userSession.getAttribute("id").toString();
+            }
+            else
+            {
+                //session has ended
+                response.sendRedirect("Login.jsp");
+                return;
+            }
         %>
         
         <script type="text/javascript">

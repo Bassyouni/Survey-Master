@@ -14,9 +14,24 @@
     //this is the way to get the session.
     HttpSession currentUserSession = request.getSession();
     
-    String userName = currentUserSession.getAttribute("name").toString();
-    String userId = currentUserSession.getAttribute("id").toString();
-    String SurveyId = request.getParameter("surveyId");
+    String userName = "";
+    String userId = "";
+    String SurveyId = "";
+    
+    if(currentUserSession.getAttribute("id") != null)
+    {
+        userName = currentUserSession.getAttribute("name").toString();
+        userName = userName.substring(0, 1).toUpperCase() + userName.substring(1);
+        userId = currentUserSession.getAttribute("id").toString();
+        SurveyId = request.getParameter("surveyId");
+    }
+    else
+    {
+        //session has ended
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+    
     HashMap<String, String> attributeMap = new HashMap<String,String>();
     attributeMap.put("id", SurveyId);
     Survey currentSurvey = Survey.getSurvey(attributeMap);
@@ -108,8 +123,8 @@
               </h3>
 
             <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on September 24, 2017</p>
+                <a href="#"><%= userName %></a>
+              </p>
           </div>
           <hr>
           
@@ -124,8 +139,8 @@
               </h3>
 
             <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on September 24, 2017</p>
+                <a href="#"><%= userName %></a>
+              </p>
           </div>
               
           <div id="piechart"></div>

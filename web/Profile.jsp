@@ -4,6 +4,7 @@
     Author     : Sanad
 --%>
 
+<%@page import="Model.Router"%>
 <%@page import="Model.Survey"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
@@ -11,10 +12,25 @@
 <!DOCTYPE html>
 <%  
     //this is the way to get the session.
+    
+    String userName = "";
+    String userId = "";
+    
     HttpSession currentUserSession = request.getSession();
     
-    String userName = currentUserSession.getAttribute("name").toString();
-    String userId = currentUserSession.getAttribute("id").toString();
+    if(currentUserSession.getAttribute("id") != null)
+    {
+        userName = currentUserSession.getAttribute("name").toString();
+        userId = currentUserSession.getAttribute("id").toString();
+    }
+    else
+    {
+        //session has ended
+        response.sendRedirect("Login.jsp");
+        return;
+    }
+    
+    
 %>
 <html lang="en">
     <head>

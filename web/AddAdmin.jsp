@@ -78,6 +78,14 @@
     <div class="container">
         <% 
             HttpSession currentUserSession = request.getSession();
+
+            if(currentUserSession.getAttribute("id") == null)
+            {
+                //session has ended
+                response.sendRedirect("Login.jsp");
+                return;
+            }
+
             if(currentUserSession.getAttribute("added") != null){
                 if(currentUserSession.getAttribute("added").equals("false")){
                     out.print("<p class='text-center text-danger wrong-note'>Name Or E-mail already Exists!!</p>");

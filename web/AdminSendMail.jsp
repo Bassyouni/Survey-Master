@@ -24,8 +24,20 @@
             targetUser = User.selectUser(targetUserId);
         }
         
-        String userName = currentUserSession.getAttribute("name").toString();
-        String userId = currentUserSession.getAttribute("id").toString();
+        String userName = "";
+        String userId = "";
+        
+        if(currentUserSession.getAttribute("id") != null)
+        {
+            userName = currentUserSession.getAttribute("name").toString();
+            userId = currentUserSession.getAttribute("id").toString();
+        }
+        else
+        {
+            //session has ended
+            response.sendRedirect("Login.jsp");
+            return;
+        }
     %>
     <head>
         <meta charset="utf-8">

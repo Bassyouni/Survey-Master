@@ -31,8 +31,22 @@
         <link href="css/takeSurvey-style.css" rel="stylesheet">
         
         <%
-           String id = request.getParameter("id");
-           String surveyName = request.getParameter("surveyName");
+           String id = "";
+           String surveyName = "";
+           
+            HttpSession currentUserSession = request.getSession();
+
+            if(currentUserSession.getAttribute("id") != null)
+            {
+                surveyName = request.getParameter("surveyName");
+                id = request.getParameter("id");
+            }
+            else
+            {
+                //session has ended
+                response.sendRedirect("Login.jsp");
+                return;
+            }
        %>
         
        <title><%=surveyName%></title>

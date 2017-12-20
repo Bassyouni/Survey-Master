@@ -35,8 +35,13 @@ public class DatabaseConnection {
     
     private boolean connect(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
+            //singleton pattern
+            if(con == null)
+            {
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection(url, user, password);
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -137,11 +142,17 @@ public class DatabaseConnection {
     }
     
     public int delete(String tableName, int id){
-        String sql = "DELETE FROM " + tableName + " Where id = " + id + ";";
+        String deleteQueryForSurvey = "DELETE FROM " + tableName + " Where id = " + id + ";";
+        String deleteQueryForQuestion = "DELETE FROM question Where survey = " + id + ";";
+        String deleteQueryForAnswer = "DELETE FROM answer Where survey_id = " + id + ";";
+        String deleteQueryForReports = "DELETE FROM reports Where survey = " + id + ";";
         int rowsAffected = -1;
         try {
             Statement statement = con.createStatement();
-            rowsAffected = statement.executeUpdate(sql);
+            rowsAffected = statement.executeUpdate(deleteQueryForAnswer);
+            rowsAffected += statement.executeUpdate(deleteQueryForQuestion);
+            rowsAffected += statement.executeUpdate(deleteQueryForReports);
+            rowsAffected += statement.executeUpdate(deleteQueryForSurvey);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
             return rowsAffected;

@@ -12,9 +12,21 @@
         //this is the way to get the session.
         HttpSession currentUserSession = request.getSession();
 
-        String userName = currentUserSession.getAttribute("name").toString();
-        String userId = currentUserSession.getAttribute("id").toString();
-        Boolean validPassword = (Boolean) currentUserSession.getAttribute("validPassword");
+        String userName = "";
+        String userId = "";
+        Boolean validPassword = null;
+        if(currentUserSession.getAttribute("id") != null)
+        {
+            userName = currentUserSession.getAttribute("name").toString();
+            userId = currentUserSession.getAttribute("id").toString();
+            validPassword = (Boolean) currentUserSession.getAttribute("validPassword");
+        }
+        else
+        {
+            //session has ended
+            response.sendRedirect("Login.jsp");
+            return;
+        }
     %>
     <head>
         <meta charset="utf-8">

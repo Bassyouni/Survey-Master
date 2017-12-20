@@ -107,6 +107,7 @@ public class AddSurvey extends HttpServlet {
         HashMap<String, String> input = new HashMap<String, String>();
         input.put("name", surveyName);
         input.put("owner", CurrentUserId);
+        input.put("isSuspended", "0");
         DatabaseConnection databaseConnection = new DatabaseConnection();
         int inserted = databaseConnection.insertInto(surveyTableName, input);
         

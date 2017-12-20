@@ -83,7 +83,7 @@ public class StoreTheSession extends HttpServlet {
                     session.setAttribute("name", name);
                     session.setAttribute("id", id);
                     session.setAttribute("isAdmin", isAdmin);
-                    session.setMaxInactiveInterval(60 * 60);
+                    session.setMaxInactiveInterval(60 * 60 * 24);
            
                     //add session to sessionManager
                     HashMap<String, HttpSession> sessionMangerHash = (HashMap<String, HttpSession>)request.getServletContext().getAttribute(SessionManager);
@@ -91,7 +91,7 @@ public class StoreTheSession extends HttpServlet {
             
                     //Add cookie
                     Cookie cookie = new Cookie ("MyCurrentSession",session.getId());
-                    cookie.setMaxAge(60 * 60);
+                    cookie.setMaxAge(60 * 60 * 24);
                     response.addCookie(cookie);
                     if(isAdmin != null){
                         if(isAdmin.booleanValue()){
