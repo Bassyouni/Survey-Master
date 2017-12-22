@@ -111,9 +111,6 @@
                 "<h2 class='post-title'>"+
                   currentSurvey.getName() +
                 "</h2>" +
-                "<h3 class='post-subtitle'>"+
-                  "this is a description"+
-                "</h3>"+
               "</a>"+
               "<p class='post-meta'>"; 
                 if(currentSurvey.isSuspended()){

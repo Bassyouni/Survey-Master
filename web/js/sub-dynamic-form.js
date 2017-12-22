@@ -27,7 +27,7 @@ $(document).ready(function() {
         $('.check-answer-container-' + id).append(`<div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Answer-`+ checkAnswerCounter[parseInt(id-1)] + `</label>
-                        <input name='check-question-` + id + '-answer-' + checkAnswerCounter[parseInt(id-1)] + `' type="text" class="form-control" placeholder="Add Radio Answer here..." id="radio-question-` + id + `-answer-` + checkAnswerCounter[parseInt(id-1)] + `" required data-validation-required-message="Please enter your Question." >
+                        <input name='check-question-` + id + '-answer-' + checkAnswerCounter[parseInt(id-1)] + `' type="text" class="form-control" placeholder="Add Check Answer here..." id="radio-question-` + id + `-answer-` + checkAnswerCounter[parseInt(id-1)] + `" required data-validation-required-message="Please enter your Question." >
                       </div>
                     </div>`);
     });

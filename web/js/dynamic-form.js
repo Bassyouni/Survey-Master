@@ -25,7 +25,7 @@ $(document).ready(function() {
         $('.question-container').append(`<div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Question-`+ questionCounter + `</label>
-                        <input name='text-question-` + textQuestionCounter + `' type="text" class="form-control" placeholder="Add survey name" id="text-question-` + textQuestionCounter + `" required data-validation-required-message="Please enter your Question." >
+                        <input name='text-question-` + textQuestionCounter + `' type="text" class="form-control" placeholder="Question..." id="text-question-` + textQuestionCounter + `" required data-validation-required-message="Please enter your Question." >
                       </div>
         <hr>
         <br>

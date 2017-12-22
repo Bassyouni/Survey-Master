@@ -25,7 +25,7 @@ public class DatabaseConnection {
     
     private static final String url = "jdbc:mysql://localhost:3306/survey_db";
     private static final String user = "root";
-    private static final String password = "root";
+    private static final String password = "24972052";
     
     private static Connection con;
     
@@ -142,6 +142,7 @@ public class DatabaseConnection {
     }
     
     public int delete(String tableName, int id){
+        
         String deleteQueryForSurvey = "DELETE FROM " + tableName + " Where id = " + id + ";";
         String deleteQueryForQuestion = "DELETE FROM question Where survey = " + id + ";";
         String deleteQueryForAnswer = "DELETE FROM answer Where survey_id = " + id + ";";
@@ -149,10 +150,12 @@ public class DatabaseConnection {
         int rowsAffected = -1;
         try {
             Statement statement = con.createStatement();
-            rowsAffected = statement.executeUpdate(deleteQueryForAnswer);
-            rowsAffected += statement.executeUpdate(deleteQueryForQuestion);
-            rowsAffected += statement.executeUpdate(deleteQueryForReports);
-            rowsAffected += statement.executeUpdate(deleteQueryForSurvey);
+            if(tableName.equals("surveys")){
+                rowsAffected = statement.executeUpdate(deleteQueryForAnswer);
+                rowsAffected = statement.executeUpdate(deleteQueryForQuestion);
+                rowsAffected = statement.executeUpdate(deleteQueryForReports);
+            }
+            rowsAffected = statement.executeUpdate(deleteQueryForSurvey);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
             return rowsAffected;

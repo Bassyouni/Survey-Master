@@ -40,7 +40,7 @@
     attributeMap.put("survey_id", SurveyId);
     int anonymosUsers = Answer.getAnonymosUsers(attributeMap);
     int knownUsers = Answer.getKnownUsers(attributeMap);
-    
+    System.out.println(knownUsers);
     String numberOfPeopleWhoTookThisSurvey = String.valueOf(currentSurvey.getSurveyCount());
     String numberOfPeopleWhoReportedThisSurvey = String.valueOf(currentSurvey.getNumberOfReports());
 %>
